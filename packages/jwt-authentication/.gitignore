@@ -1,3 +1,9 @@
+.idea/
+.vscode/
+build/
+tmp/
+temp/
+
 # General
 .DS_Store
 .AppleDouble
@@ -5,6 +11,7 @@
 
 # Icon must end with two \r
 Icon
+
 
 # Thumbnails
 ._*

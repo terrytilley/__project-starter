@@ -5,6 +5,7 @@
   "username": "",
   "password": "",
   "database": "jwt-authentication_dev",
+  "dropSchema": true,
   "synchronize": true,
   "logging": false,
   "entities": ["src/entity/**/*.ts"],

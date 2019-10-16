@@ -5,10 +5,12 @@ import {
   Field,
   Mutation,
   Resolver,
-  ObjectType
+  ObjectType,
+  UseMiddleware
 } from "type-graphql";
 import { hash, compare } from "bcryptjs";
 import { User } from "./entity/User";
+import { isAuth } from "./isAuth";
 import { MyContext } from "./MyContext";
 import { createRefreshToken, createAccessToken } from "./auth";
 
@@ -23,6 +25,13 @@ export class UserResolver {
   @Query(() => [User])
   users() {
     return User.find();
+  }
+
+  // Example of auth middleware in use
+  @Query(() => String)
+  @UseMiddleware(isAuth)
+  protected(@Ctx() { payload }: MyContext) {
+    return `userId: ${payload!.userId}`;
   }
 
   @Mutation(() => Boolean)

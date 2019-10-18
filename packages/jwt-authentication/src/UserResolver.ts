@@ -1,6 +1,7 @@
 import {
   Arg,
   Ctx,
+  Int,
   Query,
   Field,
   Mutation,
@@ -9,6 +10,7 @@ import {
   UseMiddleware
 } from "type-graphql";
 import { hash, compare } from "bcryptjs";
+import { getConnection } from "typeorm";
 import { User } from "./entity/User";
 import { isAuth } from "./isAuth";
 import { MyContext } from "./MyContext";
@@ -52,6 +54,16 @@ export class UserResolver {
       console.error(err);
       return false;
     }
+
+    return true;
+  }
+
+  // Example of how to revoke refresh tokens
+  @Mutation(() => Boolean)
+  async revokeRefreshTokensForUser(@Arg("userId", () => Int) userId: number) {
+    await getConnection()
+      .getRepository(User)
+      .increment({ id: userId }, "tokenVersion", 1);
 
     return true;
   }

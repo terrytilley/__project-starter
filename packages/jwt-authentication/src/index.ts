@@ -1,6 +1,7 @@
 import "dotenv/config";
 import "reflect-metadata";
 
+import cors from "cors";
 import express from "express";
 import cookieParser from "cookie-parser";
 
@@ -18,6 +19,12 @@ import { sendRefreshToken } from "./sendRefreshToken";
   const port = 4000;
   const app = express();
 
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true
+    })
+  );
   app.use(cookieParser());
 
   app.post("/refresh_token", async (req, res) => {
@@ -60,7 +67,7 @@ import { sendRefreshToken } from "./sendRefreshToken";
     context: ({ req, res }) => ({ req, res })
   });
 
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(port, () => {
     console.log(`🚀 Server running at http://localhost:${port}`);

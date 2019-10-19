@@ -21,6 +21,8 @@ import { createRefreshToken, createAccessToken } from "./auth";
 
 @ObjectType()
 class LoginResponse {
+  @Field(() => User)
+  user: User;
   @Field()
   accessToken: string;
 }
@@ -109,6 +111,7 @@ export class UserResolver {
     // login successful
     sendRefreshToken(res, createRefreshToken(user));
     return {
+      user,
       accessToken: createAccessToken(user)
     };
   }

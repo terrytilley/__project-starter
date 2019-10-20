@@ -6,7 +6,8 @@
     "build": "tsc -b",
     "start": "yarn build && node dist/index.js",
     "dev": "nodemon --exec ts-node src/index.ts",
-    "lint": "tslint -p tsconfig.json -c tslint.json"
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "typeorm": "ts-node ./node_modules/typeorm/cli -f ./src/config/ormconfig.ts"
   },
   "dependencies": {
     "apollo-server-express": "^2.9.6",

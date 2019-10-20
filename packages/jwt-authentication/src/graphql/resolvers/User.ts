@@ -43,17 +43,15 @@ export class UserResolver {
     return `userId: ${payload!.userId}`;
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => User)
   async register(@Arg('email') email: string, @Arg('password') password: string) {
     try {
-      await User.create({ email, password }).save();
+      return User.create({ email, password }).save();
     } catch (err) {
       console.error(err);
 
-      return false;
+      return null;
     }
-
-    return true;
   }
 
   // Example of how to revoke refresh tokens

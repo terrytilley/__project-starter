@@ -23,7 +23,7 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Field()
+  @Field(() => String)
   @Column({ type: 'varchar', length: 255, nullable: false, unique: true })
   email: string;
 
@@ -33,6 +33,7 @@ export class User extends BaseEntity {
   @Column('int', { default: 0 })
   tokenVersion: number;
 
+  @Field(() => Date)
   @Column({
     default: () => 'CURRENT_TIMESTAMP',
     type: 'timestamp',

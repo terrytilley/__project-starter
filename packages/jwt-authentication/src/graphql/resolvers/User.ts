@@ -1,6 +1,5 @@
-import { compare, hash } from 'bcryptjs';
 import { verify } from 'jsonwebtoken';
-import { Arg, Ctx, Int, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
+import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { getConnection } from 'typeorm';
 
 import { User } from '../../entity/User';
@@ -46,14 +45,8 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   async register(@Arg('email') email: string, @Arg('password') password: string) {
-    const salt = 12;
-    const hashedPassword = await hash(password, salt);
-
     try {
-      await User.insert({
-        email,
-        password: hashedPassword,
-      });
+      await User.create({ email, password }).save();
     } catch (err) {
       console.error(err);
 
@@ -65,7 +58,7 @@ export class UserResolver {
 
   // Example of how to revoke refresh tokens
   @Mutation(() => Boolean)
-  async revokeRefreshTokensForUser(@Arg('userId', () => Int) userId: number) {
+  async revokeRefreshTokensForUser(@Arg('userId', () => String) userId: string) {
     await getConnection()
       .getRepository(User)
       .increment({ id: userId }, 'tokenVersion', 1);
@@ -92,7 +85,7 @@ export class UserResolver {
       throw new Error('Could not find user');
     }
 
-    const valid = await compare(password, user.password);
+    const valid = await User.comparePassword(user, password);
 
     if (!valid) {
       throw new Error('Bad password');

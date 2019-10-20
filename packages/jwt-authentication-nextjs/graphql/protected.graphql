@@ -1,0 +1,3 @@
+query Protected {
+  protected
+}

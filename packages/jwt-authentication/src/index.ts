@@ -25,7 +25,7 @@ import { sendRefreshToken } from "./sendRefreshToken";
       credentials: true
     })
   );
-  app.use(cookieParser());
+  app.use("/refresh_token", cookieParser());
 
   app.post("/refresh_token", async (req, res) => {
     const token = req.cookies.jid;

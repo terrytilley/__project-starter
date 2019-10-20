@@ -7,12 +7,11 @@ import { verify } from 'jsonwebtoken';
 import { buildSchema } from 'type-graphql';
 
 import { User } from '../entity/User';
-import { UserResolver } from '../graphql/resolvers/User';
+import { resolvers } from '../graphql/resolvers';
 import { createAccessToken, createRefreshToken } from '../utils/auth';
 import { sendRefreshToken } from '../utils/sendRefreshToken';
 
-export default async () => {
-  const port = 4000;
+export default async (host = 'localhost', port = 4000) => {
   const app = express.default();
 
   app.use(
@@ -56,15 +55,13 @@ export default async () => {
   });
 
   const apolloServer = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [UserResolver],
-    }),
+    schema: await buildSchema({ resolvers }),
     context: ({ req, res }) => ({ req, res }),
   });
 
   apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(port, () => {
-    console.log(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`);
+    console.log(`🚀 Server ready at http://${host}:${port}${apolloServer.graphqlPath}`);
   });
 };

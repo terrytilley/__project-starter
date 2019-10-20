@@ -4,9 +4,7 @@ import Layout from "../components/Layout";
 import { useProtectedQuery } from "../generated/graphql";
 
 export default () => {
-  const { data, loading, error } = useProtectedQuery({
-    fetchPolicy: "network-only"
-  });
+  const { data, loading, error } = useProtectedQuery();
 
   if (loading) {
     return (

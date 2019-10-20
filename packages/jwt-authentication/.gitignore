@@ -3,6 +3,7 @@
 build/
 tmp/
 temp/
+dist/
 
 # General
 .DS_Store

@@ -10,13 +10,13 @@ const config: ConnectionOptions = {
   logging: Boolean(process.env.TYPEORM_LOGGING),
   dropSchema: Boolean(process.env.TYPEORM_DROP_SCHEMA),
   synchronize: Boolean(process.env.TYPEORM_SYNCHRONIZE),
-  entities: [`${__dirname}/entity/**/*{.ts,.js}`],
-  migrations: [`${__dirname}/migrations/**/*{.ts,.js}`],
-  subscribers: [`${__dirname}/subscribers/**/*{.ts,.js}`],
+  entities: [`${__dirname}/../entity/**/*{.ts,.js}`],
+  migrations: [`${__dirname}/../migrations/**/*{.ts,.js}`],
+  subscribers: [`${__dirname}/../subscribers/**/*{.ts,.js}`],
   cli: {
-    entitiesDir: `${__dirname}/entity`,
-    migrationsDir: `${__dirname}/migrations`,
-    subscribersDir: `${__dirname}/subscribers`,
+    entitiesDir: `${__dirname}/../entity`,
+    migrationsDir: `${__dirname}/../migrations`,
+    subscribersDir: `${__dirname}/../subscribers`,
   },
 };
 

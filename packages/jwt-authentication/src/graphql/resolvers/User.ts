@@ -3,12 +3,12 @@ import { verify } from 'jsonwebtoken';
 import { Arg, Ctx, Int, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { getConnection } from 'typeorm';
 
-import { createAccessToken, createRefreshToken } from './auth';
-import { User } from './entity/User';
-import { LoginResponse } from './graphql/types/LoginResponse';
-import { isAuth } from './isAuth';
-import { MyContext } from './MyContext';
-import { sendRefreshToken } from './sendRefreshToken';
+import { User } from '../../entity/User';
+import { isAuth } from '../../middleware/isAuth';
+import { sendRefreshToken } from '../../sendRefreshToken';
+import { Context } from '../../types';
+import { createAccessToken, createRefreshToken } from '../../utils/auth';
+import { LoginResponse } from '../types/LoginResponse';
 
 @Resolver()
 export class UserResolver {
@@ -18,7 +18,7 @@ export class UserResolver {
   }
 
   @Query(() => User, { nullable: true })
-  me(@Ctx() { req }: MyContext) {
+  me(@Ctx() { req }: Context) {
     const authorization = req.headers.authorization;
 
     if (!authorization) {
@@ -40,7 +40,7 @@ export class UserResolver {
   // Example of auth middleware in use
   @Query(() => String)
   @UseMiddleware(isAuth)
-  protected(@Ctx() { payload }: MyContext) {
+  protected(@Ctx() { payload }: Context) {
     return `userId: ${payload!.userId}`;
   }
 
@@ -74,7 +74,7 @@ export class UserResolver {
   }
 
   @Mutation(() => Boolean)
-  async logout(@Ctx() { res }: MyContext) {
+  async logout(@Ctx() { res }: Context) {
     sendRefreshToken(res, '');
 
     return true;
@@ -84,7 +84,7 @@ export class UserResolver {
   async login(
     @Arg('email') email: string,
     @Arg('password') password: string,
-    @Ctx() { res }: MyContext
+    @Ctx() { res }: Context
   ): Promise<LoginResponse> {
     const user = await User.findOne({ where: { email } });
 

@@ -1,76 +1,9 @@
-import 'dotenv/config';
-import 'reflect-metadata';
+import app from './app';
+import db from './db';
 
-import cookieParser from 'cookie-parser';
-import * as cors from 'cors';
-import * as express from 'express';
+const server = async () => {
+  await db();
+  app();
+};
 
-import { ApolloServer } from 'apollo-server-express';
-import { verify } from 'jsonwebtoken';
-import { buildSchema } from 'type-graphql';
-import { createConnection } from 'typeorm';
-
-import { createAccessToken, createRefreshToken } from './auth';
-import { User } from './entity/User';
-import { sendRefreshToken } from './sendRefreshToken';
-import { UserResolver } from './UserResolver';
-
-(async () => {
-  const port = 4000;
-  const app = express.default();
-
-  app.use(
-    cors.default({
-      origin: 'http://localhost:3000',
-      credentials: true,
-    })
-  );
-  app.use('/refresh_token', cookieParser());
-
-  app.post('/refresh_token', async (req, res) => {
-    const token = req.cookies.jid;
-
-    if (!token) {
-      return res.send({ ok: false, accessToken: '' });
-    }
-
-    let payload: any = null;
-
-    try {
-      payload = verify(token, process.env.REFRESH_TOKEN_SECRET!);
-    } catch (err) {
-      console.error(err);
-
-      return res.send({ ok: false, accessToken: '' });
-    }
-
-    const user = await User.findOne({ id: payload.userId });
-
-    if (!user) {
-      return res.send({ ok: false, accessToken: '' });
-    }
-
-    if (user.tokenVersion !== payload.tokenVersion) {
-      return res.send({ ok: false, accessToken: '' });
-    }
-
-    sendRefreshToken(res, createRefreshToken(user));
-
-    return res.send({ ok: true, accessToken: createAccessToken(user) });
-  });
-
-  await createConnection();
-
-  const apolloServer = new ApolloServer({
-    schema: await buildSchema({
-      resolvers: [UserResolver],
-    }),
-    context: ({ req, res }) => ({ req, res }),
-  });
-
-  apolloServer.applyMiddleware({ app, cors: false });
-
-  app.listen(port, () => {
-    console.log(`🚀 Server running at http://localhost:${port}`);
-  });
-})();
+server();

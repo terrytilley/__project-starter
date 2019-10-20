@@ -5,9 +5,9 @@ import { getConnection } from 'typeorm';
 
 import { User } from '../../entity/User';
 import { isAuth } from '../../middleware/isAuth';
-import { sendRefreshToken } from '../../sendRefreshToken';
 import { Context } from '../../types';
 import { createAccessToken, createRefreshToken } from '../../utils/auth';
+import { sendRefreshToken } from '../../utils/sendRefreshToken';
 import { LoginResponse } from '../types/LoginResponse';
 
 @Resolver()

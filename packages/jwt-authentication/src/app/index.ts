@@ -1,6 +1,3 @@
-import 'dotenv/config';
-import 'reflect-metadata';
-
 import cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as express from 'express';
@@ -11,8 +8,8 @@ import { buildSchema } from 'type-graphql';
 
 import { User } from '../entity/User';
 import { UserResolver } from '../graphql/resolvers/User';
-import { sendRefreshToken } from '../sendRefreshToken';
 import { createAccessToken, createRefreshToken } from '../utils/auth';
+import { sendRefreshToken } from '../utils/sendRefreshToken';
 
 export default async () => {
   const port = 4000;
@@ -20,7 +17,7 @@ export default async () => {
 
   app.use(
     cors.default({
-      origin: 'http://localhost:3000',
+      origin: process.env.FRONTEND_URL!,
       credentials: true,
     })
   );
@@ -68,6 +65,6 @@ export default async () => {
   apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(port, () => {
-    console.log(`🚀 Server running at http://localhost:${port}`);
+    console.log(`🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`);
   });
 };

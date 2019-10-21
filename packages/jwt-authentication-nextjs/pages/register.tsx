@@ -14,12 +14,10 @@ export default () => {
       <form
         onSubmit={async e => {
           e.preventDefault();
-          const response = await register({
+          await register({
             variables: { email, password }
           });
-
           Router.push("/");
-          console.log("Response:", response);
         }}
       >
         <div>

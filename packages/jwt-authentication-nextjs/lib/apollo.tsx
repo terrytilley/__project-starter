@@ -216,10 +216,10 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
 
   const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
-      console.error({ graphQLErrors });
+      console.error(graphQLErrors);
     }
     if (networkError) {
-      console.error({ networkError });
+      console.error(networkError);
     }
   });
 

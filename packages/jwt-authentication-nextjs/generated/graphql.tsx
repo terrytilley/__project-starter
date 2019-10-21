@@ -9,6 +9,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any;
 };
 
 export type LoginResponse = {
@@ -19,7 +21,7 @@ export type LoginResponse = {
 
 export type Mutation = {
   __typename?: "Mutation";
-  register: Scalars["Boolean"];
+  register: User;
   revokeRefreshTokensForUser: Scalars["Boolean"];
   logout: Scalars["Boolean"];
   login: LoginResponse;
@@ -31,7 +33,7 @@ export type MutationRegisterArgs = {
 };
 
 export type MutationRevokeRefreshTokensForUserArgs = {
-  userId: Scalars["Int"];
+  userId: Scalars["String"];
 };
 
 export type MutationLoginArgs = {
@@ -48,8 +50,9 @@ export type Query = {
 
 export type User = {
   __typename?: "User";
-  id: Scalars["Int"];
+  id: Scalars["String"];
   email: Scalars["String"];
+  createdAt: Scalars["DateTime"];
 };
 
 export type LoginMutationVariables = {
@@ -89,10 +92,9 @@ export type RegisterMutationVariables = {
   password: Scalars["String"];
 };
 
-export type RegisterMutation = { __typename?: "Mutation" } & Pick<
-  Mutation,
-  "register"
->;
+export type RegisterMutation = { __typename?: "Mutation" } & {
+  register: { __typename?: "User" } & Pick<User, "id" | "email" | "createdAt">;
+};
 
 export type UsersQueryVariables = {};
 
@@ -297,7 +299,11 @@ export type ProtectedQueryResult = ApolloReactCommon.QueryResult<
 >;
 export const RegisterDocument = gql`
   mutation Register($email: String!, $password: String!) {
-    register(email: $email, password: $password)
+    register(email: $email, password: $password) {
+      id
+      email
+      createdAt
+    }
   }
 `;
 export type RegisterMutationFn = ApolloReactCommon.MutationFunction<

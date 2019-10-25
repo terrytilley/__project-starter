@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import Layout from "../components/Layout";
-import { useProtectedQuery } from "../generated/graphql";
+import Layout from '../components/Layout';
+import { useProtectedQuery } from '../generated/graphql';
 
 export default () => {
   const { data, loading, error } = useProtectedQuery();
@@ -16,6 +16,7 @@ export default () => {
 
   if (error) {
     console.log(error);
+
     return (
       <Layout>
         <h1>Errors</h1>

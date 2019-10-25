@@ -1,15 +1,15 @@
-import * as React from "react";
-import Head from "next/head";
+// tslint:disable-next-line: no-submodule-imports
+import Head from 'next/head';
+import * as React from 'react';
 
-import { Navbar } from "./Navbar";
-
-type Props = {
+import { Navbar } from './Navbar';
+interface Props {
   title?: string;
-};
+}
 
 const Layout: React.FunctionComponent<Props> = ({
-  children,
-  title = "This is the default title"
+  title = 'This is the default title',
+  children
 }) => (
   <div>
     <Head>

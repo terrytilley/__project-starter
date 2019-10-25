@@ -4,6 +4,7 @@ documents: "graphql/*.graphql"
 generates:
   generated/graphql.tsx:
     plugins:
+      - add: '/* tslint:disable */'
       - "typescript"
       - "typescript-operations"
       - "typescript-react-apollo"

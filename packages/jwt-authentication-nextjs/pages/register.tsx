@@ -1,33 +1,39 @@
-import React, { useState } from "react";
-import Router from "next/router";
+import Router from 'next/router';
+import React, { useState } from 'react';
 
-import Layout from "../components/Layout";
-import { useRegisterMutation } from "../generated/graphql";
+import Layout from '../components/Layout';
+import { useRegisterMutation } from '../generated/graphql';
 
 export default () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [register] = useRegisterMutation();
+
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    await register({
+      variables: { email, password }
+    });
+    Router.push('/');
+  };
+
+  const onEmailChange = (e: any) => {
+    setEmail(e.target.value);
+  };
+
+  const onPasswordChange = (e: any) => {
+    setPassword(e.target.value);
+  };
 
   return (
     <Layout>
-      <form
-        onSubmit={async e => {
-          e.preventDefault();
-          await register({
-            variables: { email, password }
-          });
-          Router.push("/");
-        }}
-      >
+      <form onSubmit={onSubmit}>
         <div>
           <input
             type="email"
             value={email}
             placeholder="Email"
-            onChange={e => {
-              setEmail(e.target.value);
-            }}
+            onChange={onEmailChange}
           />
         </div>
         <div>
@@ -35,9 +41,7 @@ export default () => {
             type="password"
             value={password}
             placeholder="Password"
-            onChange={e => {
-              setPassword(e.target.value);
-            }}
+            onChange={onPasswordChange}
           />
         </div>
         <button type="submit">Register</button>

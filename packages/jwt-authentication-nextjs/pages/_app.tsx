@@ -1,12 +1,13 @@
-import App from "next/app";
-import React from "react";
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloProvider } from '@apollo/react-hooks';
+import App from 'next/app';
+import React from 'react';
 
-import { withApollo } from "../lib/apollo";
+import { withApollo } from '../lib/apollo';
 
 class MyApp extends App<any> {
   render() {
     const { Component, pageProps, apolloClient } = this.props;
+
     return (
       <ApolloProvider client={apolloClient}>
         <Component {...pageProps} />

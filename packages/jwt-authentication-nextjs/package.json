@@ -6,13 +6,19 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc",
-    "gen": "graphql-codegen --config codegen.yml"
+    "gen": "graphql-codegen --config codegen.yml",
+    "lint": "tslint -p tsconfig.json -c tslint.json"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.2",
     "@apollo/react-ssr": "^3.1.2",
     "apollo-boost": "^0.4.4",
+    "apollo-cache-inmemory": "^1.6.3",
+    "apollo-client": "^2.6.4",
+    "apollo-link": "^1.2.13",
     "apollo-link-context": "^1.0.19",
+    "apollo-link-error": "^1.1.12",
+    "apollo-link-http": "^1.5.16",
     "apollo-link-token-refresh": "^0.2.6",
     "cookie": "^0.4.0",
     "graphql": "^14.5.8",
@@ -23,6 +29,7 @@
     "react-dom": "^16.10.1"
   },
   "devDependencies": {
+    "@graphql-codegen/add": "^1.8.2",
     "@graphql-codegen/cli": "^1.7.0",
     "@graphql-codegen/introspection": "1.8.1",
     "@graphql-codegen/typescript": "1.8.1",
@@ -33,6 +40,10 @@
     "@types/node": "^12.7.8",
     "@types/react": "^16.9.3",
     "@types/react-dom": "^16.9.1",
+    "prettier": "^1.18.2",
+    "tslint": "^5.20.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-react": "^4.1.0",
     "typescript": "3.6.4"
   },
   "license": "MIT"

@@ -1,7 +1,9 @@
-import gql from "graphql-tag";
-import * as ApolloReactCommon from "@apollo/react-common";
-import * as ApolloReactHooks from "@apollo/react-hooks";
+/* tslint:disable */
+import gql from 'graphql-tag';
+import * as ApolloReactCommon from '@apollo/react-common';
+import * as ApolloReactHooks from '@apollo/react-hooks';
 export type Maybe<T> = T | null;
+
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -14,92 +16,92 @@ export type Scalars = {
 };
 
 export type LoginResponse = {
-  __typename?: "LoginResponse";
+  __typename?: 'LoginResponse';
   user: User;
-  accessToken: Scalars["String"];
+  accessToken: Scalars['String'];
 };
 
 export type Mutation = {
-  __typename?: "Mutation";
+  __typename?: 'Mutation';
   register: User;
-  revokeRefreshTokensForUser: Scalars["Boolean"];
-  logout: Scalars["Boolean"];
+  revokeRefreshTokensForUser: Scalars['Boolean'];
+  logout: Scalars['Boolean'];
   login: LoginResponse;
 };
 
 export type MutationRegisterArgs = {
-  password: Scalars["String"];
-  email: Scalars["String"];
+  password: Scalars['String'];
+  email: Scalars['String'];
 };
 
 export type MutationRevokeRefreshTokensForUserArgs = {
-  userId: Scalars["String"];
+  userId: Scalars['String'];
 };
 
 export type MutationLoginArgs = {
-  password: Scalars["String"];
-  email: Scalars["String"];
+  password: Scalars['String'];
+  email: Scalars['String'];
 };
 
 export type Query = {
-  __typename?: "Query";
+  __typename?: 'Query';
   users: Array<User>;
   me?: Maybe<User>;
-  protected: Scalars["String"];
+  protected: Scalars['String'];
 };
 
 export type User = {
-  __typename?: "User";
-  id: Scalars["String"];
-  email: Scalars["String"];
-  createdAt: Scalars["DateTime"];
+  __typename?: 'User';
+  id: Scalars['String'];
+  email: Scalars['String'];
+  createdAt: Scalars['DateTime'];
 };
 
 export type LoginMutationVariables = {
-  email: Scalars["String"];
-  password: Scalars["String"];
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
-export type LoginMutation = { __typename?: "Mutation" } & {
-  login: { __typename?: "LoginResponse" } & Pick<
+export type LoginMutation = { __typename?: 'Mutation' } & {
+  login: { __typename?: 'LoginResponse' } & Pick<
     LoginResponse,
-    "accessToken"
-  > & { user: { __typename?: "User" } & Pick<User, "id" | "email"> };
+    'accessToken'
+  > & { user: { __typename?: 'User' } & Pick<User, 'id' | 'email'> };
 };
 
 export type LogoutMutationVariables = {};
 
-export type LogoutMutation = { __typename?: "Mutation" } & Pick<
+export type LogoutMutation = { __typename?: 'Mutation' } & Pick<
   Mutation,
-  "logout"
+  'logout'
 >;
 
 export type MeQueryVariables = {};
 
-export type MeQuery = { __typename?: "Query" } & {
-  me: Maybe<{ __typename?: "User" } & Pick<User, "id" | "email">>;
+export type MeQuery = { __typename?: 'Query' } & {
+  me: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'email'>>;
 };
 
 export type ProtectedQueryVariables = {};
 
-export type ProtectedQuery = { __typename?: "Query" } & Pick<
+export type ProtectedQuery = { __typename?: 'Query' } & Pick<
   Query,
-  "protected"
+  'protected'
 >;
 
 export type RegisterMutationVariables = {
-  email: Scalars["String"];
-  password: Scalars["String"];
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
-export type RegisterMutation = { __typename?: "Mutation" } & {
-  register: { __typename?: "User" } & Pick<User, "id" | "email" | "createdAt">;
+export type RegisterMutation = { __typename?: 'Mutation' } & {
+  register: { __typename?: 'User' } & Pick<User, 'id' | 'email' | 'createdAt'>;
 };
 
 export type UsersQueryVariables = {};
 
-export type UsersQuery = { __typename?: "Query" } & {
-  users: Array<{ __typename?: "User" } & Pick<User, "id" | "email">>;
+export type UsersQuery = { __typename?: 'Query' } & {
+  users: Array<{ __typename?: 'User' } & Pick<User, 'id' | 'email'>>;
 };
 
 export const LoginDocument = gql`

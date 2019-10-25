@@ -1,8 +1,8 @@
-import React from "react";
-import Link from "next/link";
+import Link from 'next/link';
+import React from 'react';
 
-import { setAccessToken } from "../lib/accessToken";
-import { useMeQuery, useLogoutMutation } from "../generated/graphql";
+import { useLogoutMutation, useMeQuery } from '../generated/graphql';
+import { setAccessToken } from '../lib/accessToken';
 
 export const Navbar: React.FC = () => {
   const { data, loading } = useMeQuery();
@@ -17,6 +17,12 @@ export const Navbar: React.FC = () => {
   } else {
     loggedInMessage = <div>You are not logged in</div>;
   }
+
+  const onLogout = async () => {
+    await logout();
+    setAccessToken('');
+    await client!.resetStore();
+  };
 
   return (
     <nav>
@@ -43,15 +49,7 @@ export const Navbar: React.FC = () => {
         </li>
         {!loading && data && data.me && (
           <li>
-            <button
-              onClick={async () => {
-                await logout();
-                setAccessToken("");
-                await client!.resetStore();
-              }}
-            >
-              Logout
-            </button>
+            <button onClick={onLogout}>Logout</button>
           </li>
         )}
       </ul>

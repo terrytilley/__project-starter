@@ -20,9 +20,9 @@ export default () => {
         }
         store.writeQuery<MeQuery>({
           query: MeDocument,
-          data: { me: data.login.user }
+          data: { me: data.login.user },
         });
-      }
+      },
     });
 
     if (response && response.data) {

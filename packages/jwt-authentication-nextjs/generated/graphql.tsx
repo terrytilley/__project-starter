@@ -63,18 +63,14 @@ export type LoginMutationVariables = {
 };
 
 export type LoginMutation = { __typename?: 'Mutation' } & {
-  login: { __typename?: 'LoginResponse' } & Pick<
-    LoginResponse,
-    'accessToken'
-  > & { user: { __typename?: 'User' } & Pick<User, 'id' | 'email'> };
+  login: { __typename?: 'LoginResponse' } & Pick<LoginResponse, 'accessToken'> & {
+      user: { __typename?: 'User' } & Pick<User, 'id' | 'email'>;
+    };
 };
 
 export type LogoutMutationVariables = {};
 
-export type LogoutMutation = { __typename?: 'Mutation' } & Pick<
-  Mutation,
-  'logout'
->;
+export type LogoutMutation = { __typename?: 'Mutation' } & Pick<Mutation, 'logout'>;
 
 export type MeQueryVariables = {};
 
@@ -84,10 +80,7 @@ export type MeQuery = { __typename?: 'Query' } & {
 
 export type ProtectedQueryVariables = {};
 
-export type ProtectedQuery = { __typename?: 'Query' } & Pick<
-  Query,
-  'protected'
->;
+export type ProtectedQuery = { __typename?: 'Query' } & Pick<Query, 'protected'>;
 
 export type RegisterMutationVariables = {
   email: Scalars['String'];
@@ -150,9 +143,7 @@ export function useLoginMutation(
   );
 }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
-export type LoginMutationResult = ApolloReactCommon.MutationResult<
-  LoginMutation
->;
+export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
 export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LoginMutation,
   LoginMutationVariables
@@ -195,9 +186,7 @@ export function useLogoutMutation(
   );
 }
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
-export type LogoutMutationResult = ApolloReactCommon.MutationResult<
-  LogoutMutation
->;
+export type LogoutMutationResult = ApolloReactCommon.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LogoutMutation,
   LogoutMutationVariables
@@ -229,10 +218,7 @@ export const MeDocument = gql`
 export function useMeQuery(
   baseOptions?: ApolloReactHooks.QueryHookOptions<MeQuery, MeQueryVariables>
 ) {
-  return ApolloReactHooks.useQuery<MeQuery, MeQueryVariables>(
-    MeDocument,
-    baseOptions
-  );
+  return ApolloReactHooks.useQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
 }
 export function useMeLazyQuery(
   baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeQuery, MeQueryVariables>
@@ -244,10 +230,7 @@ export function useMeLazyQuery(
 }
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
-export type MeQueryResult = ApolloReactCommon.QueryResult<
-  MeQuery,
-  MeQueryVariables
->;
+export type MeQueryResult = ApolloReactCommon.QueryResult<MeQuery, MeQueryVariables>;
 export const ProtectedDocument = gql`
   query Protected {
     protected
@@ -270,10 +253,7 @@ export const ProtectedDocument = gql`
  * });
  */
 export function useProtectedQuery(
-  baseOptions?: ApolloReactHooks.QueryHookOptions<
-    ProtectedQuery,
-    ProtectedQueryVariables
-  >
+  baseOptions?: ApolloReactHooks.QueryHookOptions<ProtectedQuery, ProtectedQueryVariables>
 ) {
   return ApolloReactHooks.useQuery<ProtectedQuery, ProtectedQueryVariables>(
     ProtectedDocument,
@@ -292,9 +272,7 @@ export function useProtectedLazyQuery(
   );
 }
 export type ProtectedQueryHookResult = ReturnType<typeof useProtectedQuery>;
-export type ProtectedLazyQueryHookResult = ReturnType<
-  typeof useProtectedLazyQuery
->;
+export type ProtectedLazyQueryHookResult = ReturnType<typeof useProtectedLazyQuery>;
 export type ProtectedQueryResult = ApolloReactCommon.QueryResult<
   ProtectedQuery,
   ProtectedQueryVariables
@@ -337,15 +315,13 @@ export function useRegisterMutation(
     RegisterMutationVariables
   >
 ) {
-  return ApolloReactHooks.useMutation<
-    RegisterMutation,
-    RegisterMutationVariables
-  >(RegisterDocument, baseOptions);
+  return ApolloReactHooks.useMutation<RegisterMutation, RegisterMutationVariables>(
+    RegisterDocument,
+    baseOptions
+  );
 }
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
-export type RegisterMutationResult = ApolloReactCommon.MutationResult<
-  RegisterMutation
->;
+export type RegisterMutationResult = ApolloReactCommon.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RegisterMutation,
   RegisterMutationVariables
@@ -375,10 +351,7 @@ export const UsersDocument = gql`
  * });
  */
 export function useUsersQuery(
-  baseOptions?: ApolloReactHooks.QueryHookOptions<
-    UsersQuery,
-    UsersQueryVariables
-  >
+  baseOptions?: ApolloReactHooks.QueryHookOptions<UsersQuery, UsersQueryVariables>
 ) {
   return ApolloReactHooks.useQuery<UsersQuery, UsersQueryVariables>(
     UsersDocument,
@@ -386,10 +359,7 @@ export function useUsersQuery(
   );
 }
 export function useUsersLazyQuery(
-  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
-    UsersQuery,
-    UsersQueryVariables
-  >
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<UsersQuery, UsersQueryVariables>
 ) {
   return ApolloReactHooks.useLazyQuery<UsersQuery, UsersQueryVariables>(
     UsersDocument,

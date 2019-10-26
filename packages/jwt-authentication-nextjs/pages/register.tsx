@@ -12,7 +12,7 @@ export default () => {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     await register({
-      variables: { email, password }
+      variables: { email, password },
     });
     Router.push('/');
   };

@@ -1,4 +1,3 @@
-// tslint:disable-next-line: no-submodule-imports
 import Head from 'next/head';
 import * as React from 'react';
 
@@ -9,7 +8,7 @@ interface Props {
 
 const Layout: React.FunctionComponent<Props> = ({
   title = 'This is the default title',
-  children
+  children,
 }) => (
   <div>
     <Head>

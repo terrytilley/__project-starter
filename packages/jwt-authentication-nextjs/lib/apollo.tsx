@@ -18,11 +18,7 @@ import { getAccessToken, setAccessToken } from './accessToken';
 const isServer = () => typeof window === 'undefined';
 
 export function withApollo(PageComponent: any, { ssr = true } = {}) {
-  const WithApollo = ({
-    apolloState,
-    serverAccessToken,
-    ...pageProps
-  }: any) => {
+  const WithApollo = ({ apolloState, serverAccessToken, ...pageProps }: any) => {
     if (!isServer() && !getAccessToken()) {
       setAccessToken(serverAccessToken);
     }
@@ -33,8 +29,7 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
 
   if (process.env.NODE_ENV !== 'production') {
     // Find correct display name
-    const displayName =
-      PageComponent.displayName || PageComponent.name || 'Component';
+    const displayName = PageComponent.displayName || PageComponent.name || 'Component';
 
     // Warn if old way of installing apollo is used
     if (displayName === 'App') {
@@ -49,7 +44,7 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
     WithApollo.getInitialProps = async (ctx: any) => {
       const {
         AppTree,
-        ctx: { req, res }
+        ctx: { req, res },
       } = ctx;
 
       let serverAccessToken = '';
@@ -58,16 +53,13 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
         const hasCookie = req.headers && req.headers.cookie;
         const cookies = cookie.parse(hasCookie ? req.headers.cookie : '');
         if (cookies.jid) {
-          const response = await unfetch(
-            'http://localhost:4000/refresh_token',
-            {
-              method: 'POST',
-              credentials: 'include',
-              headers: {
-                cookie: `jid=${cookies.jid}`
-              }
-            }
-          );
+          const response = await unfetch('http://localhost:4000/refresh_token', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              cookie: `jid=${cookies.jid}`,
+            },
+          });
           const data = await response.json();
           serverAccessToken = data.accessToken;
         }
@@ -100,7 +92,7 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
               <AppTree
                 pageProps={{
                   ...pageProps,
-                  apolloClient
+                  apolloClient,
                 }}
                 apolloClient={apolloClient}
               />
@@ -124,7 +116,7 @@ export function withApollo(PageComponent: any, { ssr = true } = {}) {
       return {
         ...pageProps,
         apolloState,
-        serverAccessToken
+        serverAccessToken,
       };
     };
   }
@@ -158,7 +150,7 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
   const httpLink = new HttpLink({
     uri: 'http://localhost:4000/graphql',
     credentials: 'include',
-    fetch: unfetch
+    fetch: unfetch,
   });
 
   const refreshLink = new TokenRefreshLink({
@@ -184,7 +176,7 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
     fetchAccessToken: async () => {
       return unfetch('http://localhost:4000/refresh_token', {
         method: 'POST',
-        credentials: 'include'
+        credentials: 'include',
       });
     },
     handleFetch: accessToken => {
@@ -193,7 +185,7 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
     handleError: err => {
       console.warn('Your refresh token is invalid. Try to relogin');
       console.error(err);
-    }
+    },
   });
 
   const authLink = setContext((_, { headers }) => {
@@ -202,8 +194,8 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
     return {
       headers: {
         ...headers,
-        authorization: token ? `bearer ${token}` : ''
-      }
+        authorization: token ? `bearer ${token}` : '',
+      },
     };
   });
 
@@ -219,6 +211,6 @@ function createApolloClient(initialState = {}, serverAccessToken?: string) {
   return new ApolloClient({
     ssrMode: isServer(), // Disables forceFetch on the server (so queries are only run once)
     link: ApolloLink.from([refreshLink, authLink, errorLink, httpLink]),
-    cache: new InMemoryCache().restore(initialState)
+    cache: new InMemoryCache().restore(initialState),
   });
 }

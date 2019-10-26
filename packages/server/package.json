@@ -1,5 +1,5 @@
 {
-  "name": "jwt-authentication",
+  "name": "@project-starter/server",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {

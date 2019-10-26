@@ -5,14 +5,13 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc",
     "gen": "graphql-codegen --config codegen.yml",
-    "lint": "tslint -p tsconfig.json -c tslint.json"
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "type-check": "tsc"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.2",
     "@apollo/react-ssr": "^3.1.2",
-    "apollo-boost": "^0.4.4",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
     "apollo-link": "^1.2.13",

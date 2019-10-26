@@ -1,0 +1,1 @@
+# JWT Authentication Example (Next.js)

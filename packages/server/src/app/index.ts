@@ -1,5 +1,6 @@
 import * as cors from 'cors';
 import * as express from 'express';
+import helmet from 'helmet';
 
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
@@ -9,6 +10,8 @@ import router from './routes';
 
 export default async (host = 'localhost', port = 4000) => {
   const app = express.default();
+
+  app.use(helmet());
 
   app.use(
     cors.default({

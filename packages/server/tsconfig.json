@@ -23,5 +23,5 @@
     "resolveJsonModule": true
   },
   "exclude": ["node_modules", "pgdata"],
-  "include": ["./src/**/*.ts"]
+  "include": ["./src/**/*.ts", "./src/declarations.d.ts"]
 }

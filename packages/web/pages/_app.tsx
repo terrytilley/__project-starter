@@ -2,7 +2,6 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import App from 'next/app';
-import Head from 'next/head';
 import React from 'react';
 
 import { withApollo } from '../lib/apollo';
@@ -22,15 +21,10 @@ class MyApp extends App<any> {
 
     return (
       <ApolloProvider client={apolloClient}>
-        <React.Fragment>
-          <Head>
-            <title>Project Starter</title>
-          </Head>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </React.Fragment>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ThemeProvider>
       </ApolloProvider>
     );
   }

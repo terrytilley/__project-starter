@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Container, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Formik } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import Router from 'next/router';
 import React from 'react';
 
@@ -20,10 +20,15 @@ function Copyright() {
 }
 
 export default () => {
+  interface FormValues {
+    email: string;
+    password: string;
+  }
+
   const [login] = useLoginMutation();
 
   const onSubmit = async (
-    { email, password }: any,
+    { email, password }: FormValues,
     { setSubmitting, resetForm }: any
   ) => {
     setSubmitting(true);
@@ -81,7 +86,7 @@ export default () => {
     <Layout>
       <Container component="main" maxWidth="xs">
         <Formik initialValues={{ email: '', password: '' }} onSubmit={onSubmit}>
-          {({ values, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
+          {({ isSubmitting }: FormikProps<FormValues>) => (
             <div className={classes.paper}>
               <Avatar className={classes.avatar}>
                 <LockOutlinedIcon />
@@ -89,31 +94,27 @@ export default () => {
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
-              <form className={classes.form} noValidate={true} onSubmit={handleSubmit}>
-                <TextField
+              <Form className={classes.form} noValidate={true}>
+                <Field
                   type="email"
                   name="email"
                   label="Email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
                   margin="normal"
                   variant="outlined"
                   fullWidth={true}
                   required={true}
                   autoFocus={true}
+                  as={TextField}
                 />
-                <TextField
+                <Field
                   type="password"
                   name="password"
                   label="Password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
                   margin="normal"
                   variant="outlined"
                   fullWidth={true}
                   required={true}
+                  as={TextField}
                 />
                 <Button
                   type="submit"
@@ -125,7 +126,7 @@ export default () => {
                 >
                   Sign in
                 </Button>
-              </form>
+              </Form>
             </div>
           )}
         </Formik>

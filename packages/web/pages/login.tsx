@@ -2,12 +2,13 @@ import { Avatar, Box, Button, Container, TextField, Typography } from '@material
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import Link from 'next/link';
 import Router from 'next/router';
 import React from 'react';
 
 import Copyright from '../components/Copyright';
-import Layout from '../components/Layout';
 import { MeDocument, MeQuery, useLoginMutation } from '../generated/graphql';
+import Layout from '../layouts/Main';
 import { setAccessToken } from '../lib/accessToken';
 
 export default () => {
@@ -117,6 +118,7 @@ export default () => {
                 >
                   Sign in
                 </Button>
+                <Link href="/password/forgot">Forgot password?</Link>
               </Form>
             </div>
           )}

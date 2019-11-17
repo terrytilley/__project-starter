@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Layout from '../components/Layout';
 import { useUsersQuery } from '../generated/graphql';
+import Layout from '../layouts/Main';
 
 export default () => {
   const { data } = useUsersQuery({ fetchPolicy: 'network-only' });

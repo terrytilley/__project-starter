@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import * as React from 'react';
 
-import { Navbar } from './Navbar';
+import { Navbar } from '../components/Navbar';
+
 interface Props {
   title?: string;
 }

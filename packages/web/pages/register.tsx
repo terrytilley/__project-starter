@@ -6,8 +6,8 @@ import Router from 'next/router';
 import React from 'react';
 
 import Copyright from '../components/Copyright';
-import Layout from '../components/Layout';
 import { useRegisterMutation } from '../generated/graphql';
+import Layout from '../layouts/Main';
 
 export default () => {
   interface FormValues {

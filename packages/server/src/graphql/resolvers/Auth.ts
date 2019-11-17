@@ -38,6 +38,10 @@ export class AuthResolver {
       throw new Error('Could not find user');
     }
 
+    if (user.locked) {
+      throw new Error('Account is locked');
+    }
+
     const valid = await User.comparePassword(user, password);
 
     if (!valid) {

@@ -1,9 +1,14 @@
 import { Arg, Ctx, Mutation } from 'type-graphql';
 
-import { getConnection } from 'typeorm';
 import { User } from '../../entity/User';
 import { Context } from '../../types';
-import { createAccessToken, createRefreshToken } from '../../utils/auth';
+import {
+  createAccessToken,
+  createRefreshToken,
+  passwordResetToken,
+  passwordResetUrl,
+} from '../../utils/auth';
+import { resetPasswordTemplate } from '../../utils/emailTemplates';
 import { sendRefreshToken } from '../../utils/sendRefreshToken';
 import { LoginResponse } from '../types/LoginResponse';
 
@@ -53,13 +58,24 @@ export class AuthResolver {
     return true;
   }
 
-  // Example of how to revoke refresh tokens
-  @Mutation(() => Boolean)
-  async revokeRefreshTokensForUser(@Arg('userId', () => String) userId: string) {
-    await getConnection()
-      .getRepository(User)
-      .increment({ id: userId }, 'tokenVersion', 1);
+  @Mutation(() => String)
+  async forgotPassword(@Arg('email', () => String) email: string) {
+    const user = await User.findOne({ email });
+    const response = `A password reset email has been sent to ${email}`;
 
-    return true;
+    if (!user) return response;
+
+    const token = passwordResetToken(user);
+    const url = passwordResetUrl(user, token);
+    const emailTemplate = resetPasswordTemplate(user, url);
+
+    // Send email
+    console.log({ emailTemplate });
+
+    user.locked = true;
+    user.tokenVersion += 1;
+    user.save();
+
+    return response;
   }
 }

@@ -5,19 +5,10 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import Router from 'next/router';
 import React from 'react';
 
+import Copyright from '../components/Copyright';
 import Layout from '../components/Layout';
 import { MeDocument, MeQuery, useLoginMutation } from '../generated/graphql';
 import { setAccessToken } from '../lib/accessToken';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <a href="https://example.com/">Project Starter</a> {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 export default () => {
   interface FormValues {

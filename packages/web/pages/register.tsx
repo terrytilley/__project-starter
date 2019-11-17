@@ -1,51 +1,114 @@
+import { Avatar, Box, Button, Container, TextField, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import Router from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 
+import Copyright from '../components/Copyright';
 import Layout from '../components/Layout';
 import { useRegisterMutation } from '../generated/graphql';
 
 export default () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  interface FormValues {
+    email: string;
+    password: string;
+  }
+
   const [register] = useRegisterMutation();
 
-  const onSubmit = async (e: any) => {
-    e.preventDefault();
-    await register({
-      variables: { email, password },
-    });
-    Router.push('/');
+  const onSubmit = async (
+    { email, password }: FormValues,
+    { setSubmitting, resetForm }: any
+  ) => {
+    setSubmitting(true);
+
+    await register({ variables: { email, password } });
+
+    setSubmitting(false);
+    resetForm();
+    Router.push('/login');
   };
 
-  const onEmailChange = (e: any) => {
-    setEmail(e.target.value);
-  };
+  const useStyles = makeStyles(theme => ({
+    '@global': {
+      body: {
+        backgroundColor: theme.palette.common.white,
+      },
+    },
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
 
-  const onPasswordChange = (e: any) => {
-    setPassword(e.target.value);
-  };
+  const classes = useStyles();
 
   return (
     <Layout>
-      <form onSubmit={onSubmit}>
-        <div>
-          <input
-            type="email"
-            value={email}
-            placeholder="Email"
-            onChange={onEmailChange}
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            value={password}
-            placeholder="Password"
-            onChange={onPasswordChange}
-          />
-        </div>
-        <button type="submit">Register</button>
-      </form>
+      <Container component="main" maxWidth="xs">
+        <Formik initialValues={{ email: '', password: '' }} onSubmit={onSubmit}>
+          {({ isSubmitting }: FormikProps<FormValues>) => (
+            <div className={classes.paper}>
+              <Avatar className={classes.avatar}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign up
+              </Typography>
+              <Form className={classes.form} noValidate={true}>
+                <Field
+                  type="email"
+                  name="email"
+                  label="Email"
+                  margin="normal"
+                  variant="outlined"
+                  fullWidth={true}
+                  required={true}
+                  autoFocus={true}
+                  as={TextField}
+                />
+                <Field
+                  type="password"
+                  name="password"
+                  label="Password"
+                  margin="normal"
+                  variant="outlined"
+                  fullWidth={true}
+                  required={true}
+                  as={TextField}
+                />
+                <Button
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  fullWidth={true}
+                  disabled={isSubmitting}
+                  className={classes.submit}
+                >
+                  Sign up
+                </Button>
+              </Form>
+            </div>
+          )}
+        </Formik>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
     </Layout>
   );
 };

@@ -10,6 +10,7 @@ import {
   passwordResetUrl,
 } from '../../utils/auth';
 import { resetPasswordTemplate } from '../../utils/emailTemplates';
+import { sendEmail } from '../../utils/emailTransporter';
 import { sendRefreshToken } from '../../utils/sendRefreshToken';
 import { LoginResponse } from '../types/LoginResponse';
 
@@ -70,8 +71,13 @@ export class AuthResolver {
     const url = passwordResetUrl(user, token);
     const emailTemplate = resetPasswordTemplate(user, url);
 
-    // Send email
-    console.log({ emailTemplate });
+    try {
+      await sendEmail(emailTemplate);
+    } catch (err) {
+      console.error(err);
+
+      return err;
+    }
 
     user.locked = true;
     user.tokenVersion += 1;

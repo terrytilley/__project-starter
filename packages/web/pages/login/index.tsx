@@ -6,10 +6,10 @@ import Link from 'next/link';
 import Router from 'next/router';
 import React from 'react';
 
-import Copyright from '../components/Copyright';
-import { MeDocument, MeQuery, useLoginMutation } from '../generated/graphql';
-import Layout from '../layouts/Main';
-import { setAccessToken } from '../lib/accessToken';
+import Copyright from '../../components/Copyright';
+import { MeDocument, MeQuery, useLoginMutation } from '../../generated/graphql';
+import Layout from '../../layouts/Main';
+import { setAccessToken } from '../../lib/accessToken';
 
 export default () => {
   interface FormValues {
@@ -84,7 +84,7 @@ export default () => {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Sign in
+                Login
               </Typography>
               <Form className={classes.form} noValidate={true}>
                 <Field
@@ -116,9 +116,11 @@ export default () => {
                   disabled={isSubmitting}
                   className={classes.submit}
                 >
-                  Sign in
+                  Login
                 </Button>
-                <Link href="/password/forgot">Forgot password?</Link>
+                <Link href="/password/forgot">
+                  <a>Forgot password?</a>
+                </Link>
               </Form>
             </div>
           )}

@@ -1,18 +1,12 @@
 import React from 'react';
 
-import { useProtectedQuery } from '../generated/graphql';
-import Layout from '../layouts/Main';
+import { useProtectedQuery } from '../../generated/graphql';
+import Layout from '../../layouts/Main';
 
 export default () => {
   const { data, loading, error } = useProtectedQuery();
 
-  if (loading) {
-    return (
-      <Layout>
-        <div>loading...</div>
-      </Layout>
-    );
-  }
+  if (loading) return <Layout />;
 
   if (error) {
     console.log(error);

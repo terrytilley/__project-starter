@@ -1,18 +1,12 @@
 import React from 'react';
 
-import { useUsersQuery } from '../generated/graphql';
-import Layout from '../layouts/Main';
+import { useUsersQuery } from '../../generated/graphql';
+import Layout from '../../layouts/Main';
 
 export default () => {
   const { data } = useUsersQuery({ fetchPolicy: 'network-only' });
 
-  if (!data) {
-    return (
-      <Layout>
-        <div>loading...</div>
-      </Layout>
-    );
-  }
+  if (!data) return <Layout />;
 
   return (
     <Layout>

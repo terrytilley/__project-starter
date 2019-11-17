@@ -5,9 +5,9 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import Router from 'next/router';
 import React from 'react';
 
-import Copyright from '../components/Copyright';
-import { useRegisterMutation } from '../generated/graphql';
-import Layout from '../layouts/Main';
+import Copyright from '../../components/Copyright';
+import { useRegisterMutation } from '../../generated/graphql';
+import Layout from '../../layouts/Main';
 
 export default () => {
   interface FormValues {
@@ -67,7 +67,7 @@ export default () => {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Sign up
+                Register
               </Typography>
               <Form className={classes.form} noValidate={true}>
                 <Field
@@ -99,7 +99,7 @@ export default () => {
                   disabled={isSubmitting}
                   className={classes.submit}
                 >
-                  Sign up
+                  Register
                 </Button>
               </Form>
             </div>

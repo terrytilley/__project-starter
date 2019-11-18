@@ -4,12 +4,14 @@ import { Arg, Ctx, Mutation } from 'type-graphql';
 import { User } from '../../entity/User';
 import { Context } from '../../types';
 import {
+  confirmEmailToken,
+  confirmEmailUrl,
   createAccessToken,
   createRefreshToken,
   passwordResetToken,
   passwordResetUrl,
 } from '../../utils/auth';
-import { resetPasswordTemplate } from '../../utils/emailTemplates';
+import { confirmEmailTemplate, resetPasswordTemplate } from '../../utils/emailTemplates';
 import { sendEmail } from '../../utils/emailTransporter';
 import { sendRefreshToken } from '../../utils/sendRefreshToken';
 import { LoginResponse } from '../types/LoginResponse';
@@ -18,7 +20,14 @@ export class AuthResolver {
   @Mutation(() => User)
   async register(@Arg('email') email: string, @Arg('password') password: string) {
     try {
-      return User.create({ email, password }).save();
+      const user = await User.create({ email, password }).save();
+      const token = confirmEmailToken(user);
+      const url = confirmEmailUrl(user, token);
+      const emailTemplate = confirmEmailTemplate(user, url);
+
+      await sendEmail(emailTemplate);
+
+      return user;
     } catch (err) {
       console.error(err);
 
@@ -36,6 +45,10 @@ export class AuthResolver {
 
     if (!user) {
       throw new Error('Could not find user');
+    }
+
+    if (!user.confirmed) {
+      throw new Error('Confirm your email address');
     }
 
     if (user.locked) {
@@ -116,6 +129,36 @@ export class AuthResolver {
 
       user.locked = false;
       user.password = hashedPassword;
+      user.save();
+
+      return true;
+    }
+
+    return false;
+  }
+
+  @Mutation(() => Boolean)
+  async confirmEmail(
+    @Arg('token', () => String) token: string,
+    @Arg('userId', () => String) userId: string
+  ) {
+    const user = await User.findOne({ id: userId });
+
+    if (!user) return false;
+
+    let payload: any = null;
+    const secret = `${user.email}-${user.createdAt}`;
+
+    try {
+      payload = verify(token, secret);
+    } catch (err) {
+      console.error(err);
+
+      return false;
+    }
+
+    if (payload.userId === user.id) {
+      user.confirmed = true;
       user.save();
 
       return true;

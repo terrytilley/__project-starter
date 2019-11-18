@@ -31,6 +31,9 @@ export class User extends BaseEntity {
   password: string;
 
   @Column({ type: 'boolean', default: false })
+  confirmed: boolean;
+
+  @Column({ type: 'boolean', default: false })
   locked: boolean;
 
   @Column('int', { default: 0 })

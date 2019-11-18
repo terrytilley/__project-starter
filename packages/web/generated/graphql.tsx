@@ -28,6 +28,7 @@ export type Mutation = {
   logout: Scalars['Boolean'];
   forgotPassword: Scalars['String'];
   resetPassword: Scalars['Boolean'];
+  confirmEmail: Scalars['Boolean'];
 };
 
 export type MutationRegisterArgs = {
@@ -50,6 +51,11 @@ export type MutationResetPasswordArgs = {
   token: Scalars['String'];
 };
 
+export type MutationConfirmEmailArgs = {
+  userId: Scalars['String'];
+  token: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   users: Array<User>;
@@ -63,6 +69,16 @@ export type User = {
   email: Scalars['String'];
   createdAt: Scalars['DateTime'];
 };
+
+export type ConfirmEmailMutationVariables = {
+  userId: Scalars['String'];
+  token: Scalars['String'];
+};
+
+export type ConfirmEmailMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'confirmEmail'
+>;
 
 export type ForgotPasswordMutationVariables = {
   email: Scalars['String'];
@@ -123,6 +139,53 @@ export type UsersQuery = { __typename?: 'Query' } & {
   users: Array<{ __typename?: 'User' } & Pick<User, 'id' | 'email'>>;
 };
 
+export const ConfirmEmailDocument = gql`
+  mutation ConfirmEmail($userId: String!, $token: String!) {
+    confirmEmail(userId: $userId, token: $token)
+  }
+`;
+export type ConfirmEmailMutationFn = ApolloReactCommon.MutationFunction<
+  ConfirmEmailMutation,
+  ConfirmEmailMutationVariables
+>;
+
+/**
+ * __useConfirmEmailMutation__
+ *
+ * To run a mutation, you first call `useConfirmEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useConfirmEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [confirmEmailMutation, { data, loading, error }] = useConfirmEmailMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useConfirmEmailMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    ConfirmEmailMutation,
+    ConfirmEmailMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<
+    ConfirmEmailMutation,
+    ConfirmEmailMutationVariables
+  >(ConfirmEmailDocument, baseOptions);
+}
+export type ConfirmEmailMutationHookResult = ReturnType<typeof useConfirmEmailMutation>;
+export type ConfirmEmailMutationResult = ApolloReactCommon.MutationResult<
+  ConfirmEmailMutation
+>;
+export type ConfirmEmailMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  ConfirmEmailMutation,
+  ConfirmEmailMutationVariables
+>;
 export const ForgotPasswordDocument = gql`
   mutation ForgotPassword($email: String!) {
     message: forgotPassword(email: $email)

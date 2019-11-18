@@ -1,40 +1,38 @@
 import React from 'react';
 
 import { useProtectedQuery } from '../../generated/graphql';
-import Layout from '../../layouts/Main';
+import MainLayout from '../../layouts/Main';
 
-export default () => {
+export default function ProtectedPage() {
   const { data, loading, error } = useProtectedQuery();
 
-  if (loading) return <Layout />;
+  if (loading) return <MainLayout />;
 
   if (error) {
-    console.log(error);
-
     return (
-      <Layout>
+      <MainLayout>
         <h1>Errors</h1>
         <ul>
           {error.graphQLErrors.map(({ message }, index) => {
             return <li key={index}>{message}</li>;
           })}
         </ul>
-      </Layout>
+      </MainLayout>
     );
   }
 
   if (!data) {
     return (
-      <Layout>
-        <div>no data</div>
-      </Layout>
+      <MainLayout>
+        <h1>No data</h1>
+      </MainLayout>
     );
   }
 
   return (
-    <Layout>
+    <MainLayout>
       <h1>Protected Page</h1>
       <p>{data.protected}</p>
-    </Layout>
+    </MainLayout>
   );
-};
+}

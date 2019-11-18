@@ -1,12 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  Snackbar,
-  TextField,
-  Typography,
-} from '@material-ui/core';
+import { Avatar, Box, Button, Snackbar, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -15,7 +7,7 @@ import React from 'react';
 import Copyright from '../../../components/Copyright';
 import SnackbarContentWrapper from '../../../components/SnackbarContentWrapper';
 import { useForgotPasswordMutation } from '../../../generated/graphql';
-import Layout from '../../../layouts/Main';
+import AuthLayout from '../../../layouts/Auth';
 
 export default function ForgotPasswordPage() {
   interface FormValues {
@@ -77,59 +69,57 @@ export default function ForgotPasswordPage() {
   const classes = useStyles();
 
   return (
-    <Layout>
-      <Container component="main" maxWidth="xs">
-        <Formik initialValues={{ email: '', password: '' }} onSubmit={onSubmit}>
-          {({ isSubmitting }: FormikProps<FormValues>) => (
-            <div className={classes.paper}>
-              <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Find Your Account
-              </Typography>
-              <Form className={classes.form} noValidate={true}>
-                <Field
-                  type="email"
-                  name="email"
-                  label="Email"
-                  margin="normal"
-                  variant="outlined"
-                  fullWidth={true}
-                  required={true}
-                  autoFocus={true}
-                  as={TextField}
-                />
-                <Button
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  fullWidth={true}
-                  disabled={isSubmitting}
-                  className={classes.submit}
-                >
-                  Search
-                </Button>
-              </Form>
-              <Snackbar
-                open={state.open}
-                onClose={handleClose}
-                autoHideDuration={3000}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+    <AuthLayout>
+      <Formik initialValues={{ email: '', password: '' }} onSubmit={onSubmit}>
+        {({ isSubmitting }: FormikProps<FormValues>) => (
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Find Your Account
+            </Typography>
+            <Form className={classes.form} noValidate={true}>
+              <Field
+                type="email"
+                name="email"
+                label="Email"
+                margin="normal"
+                variant="outlined"
+                fullWidth={true}
+                required={true}
+                autoFocus={true}
+                as={TextField}
+              />
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                fullWidth={true}
+                disabled={isSubmitting}
+                className={classes.submit}
               >
-                <SnackbarContentWrapper
-                  variant="success"
-                  message={state.message}
-                  onClose={handleClose}
-                />
-              </Snackbar>
-            </div>
-          )}
-        </Formik>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
-    </Layout>
+                Search
+              </Button>
+            </Form>
+            <Snackbar
+              open={state.open}
+              onClose={handleClose}
+              autoHideDuration={3000}
+              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+              <SnackbarContentWrapper
+                variant="success"
+                message={state.message}
+                onClose={handleClose}
+              />
+            </Snackbar>
+          </div>
+        )}
+      </Formik>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </AuthLayout>
   );
 }

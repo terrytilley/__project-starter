@@ -20,7 +20,7 @@ const Layout: React.FunctionComponent<Props> = ({
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Navbar />
-      <Container component="main" maxWidth="lg">
+      <Container component="main" maxWidth="xs">
         {children}
       </Container>
     </React.Fragment>

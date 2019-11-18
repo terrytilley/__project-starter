@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Container, TextField, Typography } from '@material-ui/core';
+import { Avatar, Box, Button, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -8,10 +8,10 @@ import React from 'react';
 
 import Copyright from '../../components/Copyright';
 import { MeDocument, MeQuery, useLoginMutation } from '../../generated/graphql';
-import Layout from '../../layouts/Main';
+import AuthLayout from '../../layouts/Auth';
 import { setAccessToken } from '../../lib/accessToken';
 
-export default () => {
+export default function LoginPage() {
   interface FormValues {
     email: string;
     password: string;
@@ -75,60 +75,58 @@ export default () => {
   const classes = useStyles();
 
   return (
-    <Layout>
-      <Container component="main" maxWidth="xs">
-        <Formik initialValues={{ email: '', password: '' }} onSubmit={onSubmit}>
-          {({ isSubmitting }: FormikProps<FormValues>) => (
-            <div className={classes.paper}>
-              <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
+    <AuthLayout>
+      <Formik initialValues={{ email: '', password: '' }} onSubmit={onSubmit}>
+        {({ isSubmitting }: FormikProps<FormValues>) => (
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Login
+            </Typography>
+            <Form className={classes.form} noValidate={true}>
+              <Field
+                type="email"
+                name="email"
+                label="Email"
+                margin="normal"
+                variant="outlined"
+                fullWidth={true}
+                required={true}
+                autoFocus={true}
+                as={TextField}
+              />
+              <Field
+                type="password"
+                name="password"
+                label="Password"
+                margin="normal"
+                variant="outlined"
+                fullWidth={true}
+                required={true}
+                as={TextField}
+              />
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                fullWidth={true}
+                disabled={isSubmitting}
+                className={classes.submit}
+              >
                 Login
-              </Typography>
-              <Form className={classes.form} noValidate={true}>
-                <Field
-                  type="email"
-                  name="email"
-                  label="Email"
-                  margin="normal"
-                  variant="outlined"
-                  fullWidth={true}
-                  required={true}
-                  autoFocus={true}
-                  as={TextField}
-                />
-                <Field
-                  type="password"
-                  name="password"
-                  label="Password"
-                  margin="normal"
-                  variant="outlined"
-                  fullWidth={true}
-                  required={true}
-                  as={TextField}
-                />
-                <Button
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  fullWidth={true}
-                  disabled={isSubmitting}
-                  className={classes.submit}
-                >
-                  Login
-                </Button>
-                <Link href="/password/forgot">
-                  <a>Forgot password?</a>
-                </Link>
-              </Form>
-            </div>
-          )}
-        </Formik>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
-    </Layout>
+              </Button>
+              <Link href="/password/forgot">
+                <a>Forgot password?</a>
+              </Link>
+            </Form>
+          </div>
+        )}
+      </Formik>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </AuthLayout>
   );
-};
+}

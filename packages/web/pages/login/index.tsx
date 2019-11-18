@@ -3,11 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { NextPage } from 'next';
-import Link from 'next/link';
+
 import Router from 'next/router';
 import React from 'react';
 
 import Copyright from '../../components/Copyright';
+import Link from '../../components/Link';
 import { MeDocument, MeQuery, useLoginMutation } from '../../generated/graphql';
 import AuthLayout from '../../layouts/Auth';
 import { setAccessToken } from '../../lib/accessToken';
@@ -51,11 +52,6 @@ const LoginPage: NextPage = () => {
   };
 
   const useStyles = makeStyles(theme => ({
-    '@global': {
-      body: {
-        backgroundColor: theme.palette.common.white,
-      },
-    },
     paper: {
       marginTop: theme.spacing(8),
       display: 'flex',
@@ -120,8 +116,8 @@ const LoginPage: NextPage = () => {
               >
                 Login
               </Button>
-              <Link href="/password/forgot">
-                <a>Forgot password?</a>
+              <Link href="/password/forgot" color="secondary">
+                Forgot password?
               </Link>
             </Form>
           </div>

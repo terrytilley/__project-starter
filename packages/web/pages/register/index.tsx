@@ -2,14 +2,17 @@ import { Avatar, Box, Button, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { NextPage } from 'next';
 import Router from 'next/router';
 import React from 'react';
 
 import Copyright from '../../components/Copyright';
 import { useRegisterMutation } from '../../generated/graphql';
 import AuthLayout from '../../layouts/Auth';
+import { authRedirect } from '../../lib/auth';
+import { PageContext } from '../../types';
 
-export default function RegisterPage() {
+const RegisterPage: NextPage = () => {
   interface FormValues {
     email: string;
     password: string;
@@ -109,4 +112,8 @@ export default function RegisterPage() {
       </Box>
     </AuthLayout>
   );
-}
+};
+
+RegisterPage.getInitialProps = async (ctx: PageContext) => authRedirect(ctx, true);
+
+export default RegisterPage;

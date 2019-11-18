@@ -2,6 +2,7 @@ import { Avatar, Box, Button, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { NextPage } from 'next';
 import Link from 'next/link';
 import Router from 'next/router';
 import React from 'react';
@@ -10,8 +11,10 @@ import Copyright from '../../components/Copyright';
 import { MeDocument, MeQuery, useLoginMutation } from '../../generated/graphql';
 import AuthLayout from '../../layouts/Auth';
 import { setAccessToken } from '../../lib/accessToken';
+import { authRedirect } from '../../lib/auth';
+import { PageContext } from '../../types';
 
-export default function LoginPage() {
+const LoginPage: NextPage = () => {
   interface FormValues {
     email: string;
     password: string;
@@ -129,4 +132,8 @@ export default function LoginPage() {
       </Box>
     </AuthLayout>
   );
-}
+};
+
+LoginPage.getInitialProps = async (ctx: PageContext) => authRedirect(ctx, true);
+
+export default LoginPage;

@@ -2,6 +2,7 @@ import { Avatar, Box, Button, Snackbar, TextField, Typography } from '@material-
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { NextPage } from 'next';
 import Router, { useRouter } from 'next/router';
 import React from 'react';
 
@@ -9,8 +10,10 @@ import Copyright from '../../../../../components/Copyright';
 import SnackbarContentWrapper from '../../../../../components/SnackbarContentWrapper';
 import { useResetPasswordMutation } from '../../../../../generated/graphql';
 import AuthLayout from '../../../../../layouts/Auth';
+import { authRedirect } from '../../../../../lib/auth';
+import { PageContext } from '../../../../../types';
 
-export default function PasswordResetPage() {
+const PasswordResetPage: NextPage = () => {
   const router = useRouter();
 
   interface FormValues {
@@ -134,4 +137,8 @@ export default function PasswordResetPage() {
       </Box>
     </AuthLayout>
   );
-}
+};
+
+PasswordResetPage.getInitialProps = async (ctx: PageContext) => authRedirect(ctx, true);
+
+export default PasswordResetPage;

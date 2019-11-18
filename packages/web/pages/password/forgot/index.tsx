@@ -2,14 +2,17 @@ import { Avatar, Box, Button, Snackbar, TextField, Typography } from '@material-
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { NextPage } from 'next';
 import React from 'react';
 
 import Copyright from '../../../components/Copyright';
 import SnackbarContentWrapper from '../../../components/SnackbarContentWrapper';
 import { useForgotPasswordMutation } from '../../../generated/graphql';
 import AuthLayout from '../../../layouts/Auth';
+import { authRedirect } from '../../../lib/auth';
+import { PageContext } from '../../../types';
 
-export default function ForgotPasswordPage() {
+const ForgotPasswordPage: NextPage = () => {
   interface FormValues {
     email: string;
   }
@@ -122,4 +125,8 @@ export default function ForgotPasswordPage() {
       </Box>
     </AuthLayout>
   );
-}
+};
+
+ForgotPasswordPage.getInitialProps = async (ctx: PageContext) => authRedirect(ctx, true);
+
+export default ForgotPasswordPage;

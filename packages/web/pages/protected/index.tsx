@@ -1,25 +1,15 @@
+import { NextPage } from 'next';
 import React from 'react';
 
 import { useProtectedQuery } from '../../generated/graphql';
 import MainLayout from '../../layouts/Main';
+import { authRedirect } from '../../lib/auth';
+import { PageContext } from '../../types';
 
-export default function ProtectedPage() {
-  const { data, loading, error } = useProtectedQuery();
+const ProtectedPage: NextPage = () => {
+  const { data, loading } = useProtectedQuery();
 
   if (loading) return <MainLayout />;
-
-  if (error) {
-    return (
-      <MainLayout>
-        <h1>Errors</h1>
-        <ul>
-          {error.graphQLErrors.map(({ message }, index) => {
-            return <li key={index}>{message}</li>;
-          })}
-        </ul>
-      </MainLayout>
-    );
-  }
 
   if (!data) {
     return (
@@ -35,4 +25,8 @@ export default function ProtectedPage() {
       <p>{data.protected}</p>
     </MainLayout>
   );
-}
+};
+
+ProtectedPage.getInitialProps = async (ctx: PageContext) => authRedirect(ctx);
+
+export default ProtectedPage;

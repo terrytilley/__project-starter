@@ -1,7 +1,8 @@
-import { Container } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 import Head from 'next/head';
 import * as React from 'react';
 
+import Copyright from '../components/Copyright';
 import Navbar from '../components/Navbar';
 
 interface Props {
@@ -22,6 +23,9 @@ const Layout: React.FunctionComponent<Props> = ({
       <Navbar />
       <Container component="main" maxWidth="xs">
         {children}
+        <Box mt={8}>
+          <Copyright />
+        </Box>
       </Container>
     </React.Fragment>
   );

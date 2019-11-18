@@ -4,7 +4,6 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-import Copyright from '../../../../../components/Copyright';
 import { useConfirmEmailMutation } from '../../../../../generated/graphql';
 import AuthLayout from '../../../../../layouts/Auth';
 import { authRedirect } from '../../../../../lib/auth';
@@ -55,9 +54,6 @@ const ConfirmEmailPage: NextPage = () => {
             </Typography>
           )}
         </Paper>
-      </Box>
-      <Box mt={8}>
-        <Copyright />
       </Box>
     </AuthLayout>
   );

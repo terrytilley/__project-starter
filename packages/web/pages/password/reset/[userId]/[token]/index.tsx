@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Snackbar, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, Snackbar, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -6,7 +6,6 @@ import { NextPage } from 'next';
 import Router, { useRouter } from 'next/router';
 import React from 'react';
 
-import Copyright from '../../../../../components/Copyright';
 import SnackbarContentWrapper from '../../../../../components/SnackbarContentWrapper';
 import { useResetPasswordMutation } from '../../../../../generated/graphql';
 import AuthLayout from '../../../../../layouts/Auth';
@@ -127,9 +126,6 @@ const PasswordResetPage: NextPage = () => {
           </div>
         )}
       </Formik>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </AuthLayout>
   );
 };

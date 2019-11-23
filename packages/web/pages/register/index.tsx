@@ -4,12 +4,14 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { NextPage } from 'next';
 import Router from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useRegisterMutation } from '../../generated/graphql';
 import AuthLayout from '../../layouts/Auth';
 import { authRedirect } from '../../lib/auth';
 import { PageContext } from '../../types';
+
+import Alert from '../../components/Alert';
 
 const RegisterPage: NextPage = () => {
   interface FormValues {
@@ -18,6 +20,11 @@ const RegisterPage: NextPage = () => {
   }
 
   const [register] = useRegisterMutation();
+  const [state, setState] = useState({ open: false, message: '' });
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
 
   const onSubmit = async (
     { email, password }: FormValues,
@@ -25,11 +32,18 @@ const RegisterPage: NextPage = () => {
   ) => {
     setSubmitting(true);
 
-    await register({ variables: { email, password } });
+    try {
+      await register({ variables: { email, password } });
+      resetForm();
+      Router.push('/login');
+    } catch (err) {
+      const { message } = err.graphQLErrors[0];
+
+      resetForm();
+      setState({ ...state, message, open: true });
+    }
 
     setSubmitting(false);
-    resetForm();
-    Router.push('/login');
   };
 
   const useStyles = makeStyles(theme => ({
@@ -98,6 +112,12 @@ const RegisterPage: NextPage = () => {
                 Register
               </Button>
             </Form>
+            <Alert
+              open={state.open}
+              variant="error"
+              message={state.message}
+              onClose={handleClose}
+            />
           </div>
         )}
       </Formik>

@@ -54,8 +54,10 @@ const LoginPage: NextPage = () => {
       resetForm();
       Router.push('/');
     } catch (err) {
+      const { message } = err.graphQLErrors[0];
+
       resetForm();
-      setState({ ...state, message: err.graphQLErrors[0].message, open: true });
+      setState({ ...state, message, open: true });
     }
 
     setSubmitting(false);

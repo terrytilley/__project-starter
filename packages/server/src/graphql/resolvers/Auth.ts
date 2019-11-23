@@ -31,7 +31,7 @@ export class AuthResolver {
     } catch (err) {
       console.error(err);
 
-      return null;
+      return err;
     }
   }
 

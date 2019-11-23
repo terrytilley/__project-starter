@@ -5,7 +5,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import { NextPage } from 'next';
 
 import Router from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 
 import Link from '../../components/Link';
 import { MeDocument, MeQuery, useLoginMutation } from '../../generated/graphql';
@@ -14,6 +14,8 @@ import { setAccessToken } from '../../lib/accessToken';
 import { authRedirect } from '../../lib/auth';
 import { PageContext } from '../../types';
 
+import Alert from '../../components/Alert';
+
 const LoginPage: NextPage = () => {
   interface FormValues {
     email: string;
@@ -21,6 +23,11 @@ const LoginPage: NextPage = () => {
   }
 
   const [login] = useLoginMutation();
+  const [state, setState] = useState({ open: false, message: '' });
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
 
   const onSubmit = async (
     { email, password }: FormValues,
@@ -28,26 +35,30 @@ const LoginPage: NextPage = () => {
   ) => {
     setSubmitting(true);
 
-    const response = await login({
-      variables: { email, password },
-      update: (store, { data }) => {
-        if (!data) {
-          return null;
-        }
-        store.writeQuery<MeQuery>({
-          query: MeDocument,
-          data: { me: data.login.user },
-        });
-      },
-    });
+    try {
+      const response = await login({
+        variables: { email, password },
+        update: (store, { data }) => {
+          if (!data) return null;
+          store.writeQuery<MeQuery>({
+            query: MeDocument,
+            data: { me: data.login.user },
+          });
+        },
+      });
 
-    if (response && response.data) {
-      setAccessToken(response.data.login.accessToken);
+      if (response && response.data) {
+        setAccessToken(response.data.login.accessToken);
+      }
+
+      resetForm();
+      Router.push('/');
+    } catch (err) {
+      resetForm();
+      setState({ ...state, message: err.graphQLErrors[0].message, open: true });
     }
 
     setSubmitting(false);
-    resetForm();
-    Router.push('/');
   };
 
   const useStyles = makeStyles(theme => ({
@@ -119,6 +130,12 @@ const LoginPage: NextPage = () => {
                 Forgot password?
               </Link>
             </Form>
+            <Alert
+              open={state.open}
+              variant="error"
+              message={state.message}
+              onClose={handleClose}
+            />
           </div>
         )}
       </Formik>

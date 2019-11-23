@@ -1,4 +1,4 @@
-import { Avatar, Button, Snackbar, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -6,7 +6,7 @@ import { NextPage } from 'next';
 import Router, { useRouter } from 'next/router';
 import React from 'react';
 
-import SnackbarContentWrapper from '../../../../../components/SnackbarContentWrapper';
+import Alert from '../../../../../components/Alert';
 import { useResetPasswordMutation } from '../../../../../generated/graphql';
 import AuthLayout from '../../../../../layouts/Auth';
 import { authRedirect } from '../../../../../lib/auth';
@@ -111,18 +111,12 @@ const PasswordResetPage: NextPage = () => {
                 Reset
               </Button>
             </Form>
-            <Snackbar
+            <Alert
               open={state.open}
+              variant="error"
+              message={state.message}
               onClose={handleClose}
-              autoHideDuration={3000}
-              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            >
-              <SnackbarContentWrapper
-                variant="error"
-                message={state.message}
-                onClose={handleClose}
-              />
-            </Snackbar>
+            />
           </div>
         )}
       </Formik>

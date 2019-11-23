@@ -103,7 +103,7 @@ const ForgotPasswordPage: NextPage = () => {
               open={state.open}
               variant="success"
               message={state.message}
-              handleClose={handleClose}
+              onClose={handleClose}
             />
           </div>
         )}

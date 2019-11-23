@@ -1,11 +1,11 @@
-import { Avatar, Button, Snackbar, TextField, Typography } from '@material-ui/core';
+import { Avatar, Button, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { NextPage } from 'next';
 import React from 'react';
 
-import SnackbarContentWrapper from '../../../components/SnackbarContentWrapper';
+import Alert from '../../../components/Alert';
 import { useForgotPasswordMutation } from '../../../generated/graphql';
 import AuthLayout from '../../../layouts/Auth';
 import { authRedirect } from '../../../lib/auth';
@@ -99,18 +99,12 @@ const ForgotPasswordPage: NextPage = () => {
                 Search
               </Button>
             </Form>
-            <Snackbar
+            <Alert
               open={state.open}
-              onClose={handleClose}
-              autoHideDuration={3000}
-              anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            >
-              <SnackbarContentWrapper
-                variant="success"
-                message={state.message}
-                onClose={handleClose}
-              />
-            </Snackbar>
+              variant="success"
+              message={state.message}
+              handleClose={handleClose}
+            />
           </div>
         )}
       </Formik>

@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 
-import { resolvers } from '../graphql/resolvers';
+import { resolvers } from '../modules/resolvers';
 import limiter from '../services/rateLimit';
 import router from './routes';
 

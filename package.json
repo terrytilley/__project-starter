@@ -1,7 +1,14 @@
 {
   "name": "project-starter",
   "private": true,
+  "scripts": {
+    "prepare": "lerna run prepare",
+    "bootstrap": "lerna bootstrap",
+    "dev": "lerna run dev --parallel --scope @project-starter/server --scope @project-starter/web",
+    "dev:server": "lerna run dev --stream --scope @project-starter/server",
+    "dev:web": "lerna run dev --stream --scope @project-starter/web"
+  },
   "devDependencies": {
-    "lerna": "^3.18.4"
+    "lerna": "^3.19.0"
   }
 }

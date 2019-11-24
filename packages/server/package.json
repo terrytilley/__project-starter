@@ -8,7 +8,9 @@
     "start": "yarn build && node dist/index.js",
     "dev": "ts-node-dev --respawn src/index.ts",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "typeorm": "ts-node ./node_modules/typeorm/cli -f ./src/config/ormconfig.ts"
+    "typeorm": "ts-node ./node_modules/typeorm/cli -f ./src/config/ormconfig.ts",
+    "type-check": "tsc",
+    "prepare": "yarn type-check && yarn build"
   },
   "dependencies": {
     "apollo-server-express": "^2.9.12",

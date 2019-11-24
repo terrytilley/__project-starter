@@ -4,6 +4,7 @@ build/
 tmp/
 temp/
 dist/
+pgdata/
 
 # General
 .DS_Store

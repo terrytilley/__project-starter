@@ -20,6 +20,10 @@ export type ConfirmEmailInput = {
   token: Scalars['String'];
 };
 
+export type ForgotPasswordInput = {
+  email: Scalars['String'];
+};
+
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -46,7 +50,7 @@ export type MutationConfirmEmailArgs = {
 };
 
 export type MutationForgotPasswordArgs = {
-  email: Scalars['String'];
+  input: ForgotPasswordInput;
 };
 
 export type MutationLoginArgs = {
@@ -96,7 +100,7 @@ export type ConfirmEmailMutation = { __typename?: 'Mutation' } & Pick<
 >;
 
 export type ForgotPasswordMutationVariables = {
-  email: Scalars['String'];
+  input: ForgotPasswordInput;
 };
 
 export type ForgotPasswordMutation = { __typename?: 'Mutation' } & {
@@ -197,8 +201,8 @@ export type ConfirmEmailMutationOptions = ApolloReactCommon.BaseMutationOptions<
   ConfirmEmailMutationVariables
 >;
 export const ForgotPasswordDocument = gql`
-  mutation ForgotPassword($email: String!) {
-    message: forgotPassword(email: $email)
+  mutation ForgotPassword($input: ForgotPasswordInput!) {
+    message: forgotPassword(input: $input)
   }
 `;
 export type ForgotPasswordMutationFn = ApolloReactCommon.MutationFunction<
@@ -219,7 +223,7 @@ export type ForgotPasswordMutationFn = ApolloReactCommon.MutationFunction<
  * @example
  * const [forgotPasswordMutation, { data, loading, error }] = useForgotPasswordMutation({
  *   variables: {
- *      email: // value for 'email'
+ *      input: // value for 'input'
  *   },
  * });
  */

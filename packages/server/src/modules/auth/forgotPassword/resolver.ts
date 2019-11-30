@@ -4,10 +4,11 @@ import { User } from '../../../entity/User';
 import { passwordResetToken, passwordResetUrl } from '../../../utils/auth';
 import { resetPasswordTemplate } from '../../../utils/emailTemplates';
 import { sendEmail } from '../../../utils/emailTransporter';
+import { ForgotPasswordInput } from './ForgotPasswordInput';
 
 export class ForgotPasswordResolver {
   @Mutation(() => String)
-  async forgotPassword(@Arg('email', () => String) email: string) {
+  async forgotPassword(@Arg('input') { email }: ForgotPasswordInput) {
     const user = await User.findOne({ email });
     const response = `A password reset email has been sent to ${email}`;
 

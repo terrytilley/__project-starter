@@ -30,8 +30,9 @@ const ForgotPasswordPage: NextPage = () => {
   const onSubmit = async ({ email }: FormValues, { setSubmitting, resetForm }: any) => {
     setSubmitting(true);
 
+    const input = { email };
     const response = await forgotPassword({
-      variables: { email },
+      variables: { input },
     });
 
     if (response && response.data) {

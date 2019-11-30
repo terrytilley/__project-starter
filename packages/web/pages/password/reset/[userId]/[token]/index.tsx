@@ -37,13 +37,12 @@ const PasswordResetPage: NextPage = () => {
     setSubmitting(true);
 
     const { userId, token } = router.query;
-    const response = await resetPassword({
-      variables: {
-        newPassword,
-        userId: userId as string,
-        token: token as string,
-      },
-    });
+    const input = {
+      newPassword,
+      userId: userId as string,
+      token: token as string,
+    };
+    const response = await resetPassword({ variables: { input } });
 
     if (response && response.data && response.data.resetPassword) {
       Router.push('/login');

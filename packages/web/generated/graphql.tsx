@@ -58,9 +58,7 @@ export type MutationRegisterArgs = {
 };
 
 export type MutationResetPasswordArgs = {
-  newPassword: Scalars['String'];
-  userId: Scalars['String'];
-  token: Scalars['String'];
+  input: ResetPasswordInput;
 };
 
 export type Query = {
@@ -73,6 +71,12 @@ export type Query = {
 export type RegisterInput = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type ResetPasswordInput = {
+  userId: Scalars['String'];
+  token: Scalars['String'];
+  newPassword: Scalars['String'];
 };
 
 export type User = {
@@ -132,9 +136,7 @@ export type RegisterMutation = { __typename?: 'Mutation' } & {
 };
 
 export type ResetPasswordMutationVariables = {
-  newPassword: Scalars['String'];
-  userId: Scalars['String'];
-  token: Scalars['String'];
+  input: ResetPasswordInput;
 };
 
 export type ResetPasswordMutation = { __typename?: 'Mutation' } & Pick<
@@ -470,8 +472,8 @@ export type RegisterMutationOptions = ApolloReactCommon.BaseMutationOptions<
   RegisterMutationVariables
 >;
 export const ResetPasswordDocument = gql`
-  mutation ResetPassword($newPassword: String!, $userId: String!, $token: String!) {
-    resetPassword(newPassword: $newPassword, userId: $userId, token: $token)
+  mutation ResetPassword($input: ResetPasswordInput!) {
+    resetPassword(input: $input)
   }
 `;
 export type ResetPasswordMutationFn = ApolloReactCommon.MutationFunction<
@@ -492,9 +494,7 @@ export type ResetPasswordMutationFn = ApolloReactCommon.MutationFunction<
  * @example
  * const [resetPasswordMutation, { data, loading, error }] = useResetPasswordMutation({
  *   variables: {
- *      newPassword: // value for 'newPassword'
- *      userId: // value for 'userId'
- *      token: // value for 'token'
+ *      input: // value for 'input'
  *   },
  * });
  */

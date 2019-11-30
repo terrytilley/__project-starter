@@ -2,14 +2,11 @@ import { verify } from 'jsonwebtoken';
 import { Arg, Mutation } from 'type-graphql';
 
 import { User } from '../../../entity/User';
+import { ResetPasswordInput } from './ResetPasswordInput';
 
 export class ResetPasswordResolver {
   @Mutation(() => Boolean)
-  async resetPassword(
-    @Arg('token', () => String) token: string,
-    @Arg('userId', () => String) userId: string,
-    @Arg('newPassword', () => String) newPassword: string
-  ) {
+  async resetPassword(@Arg('input') { userId, token, newPassword }: ResetPasswordInput) {
     const user = await User.findOne({ id: userId });
 
     if (!user) return false;

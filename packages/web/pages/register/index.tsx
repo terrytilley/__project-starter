@@ -33,7 +33,8 @@ const RegisterPage: NextPage = () => {
     setSubmitting(true);
 
     try {
-      await register({ variables: { email, password } });
+      const input = { email, password };
+      await register({ variables: { input } });
       resetForm();
       Router.push('/login');
     } catch (err) {

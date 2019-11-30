@@ -36,8 +36,9 @@ const LoginPage: NextPage = () => {
     setSubmitting(true);
 
     try {
+      const input = { email, password };
       const response = await login({
-        variables: { email, password },
+        variables: { input },
         update: (store, { data }) => {
           if (!data) return null;
           store.writeQuery<MeQuery>({

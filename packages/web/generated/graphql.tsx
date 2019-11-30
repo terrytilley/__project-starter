@@ -15,6 +15,11 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type LoginInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type LoginResponse = {
   __typename?: 'LoginResponse';
   user: User;
@@ -23,35 +28,33 @@ export type LoginResponse = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  register: User;
+  confirmEmail: Scalars['Boolean'];
+  forgotPassword: Scalars['String'];
   login: LoginResponse;
   logout: Scalars['Boolean'];
-  forgotPassword: Scalars['String'];
+  register: User;
   resetPassword: Scalars['Boolean'];
-  confirmEmail: Scalars['Boolean'];
 };
 
-export type MutationRegisterArgs = {
-  password: Scalars['String'];
-  email: Scalars['String'];
-};
-
-export type MutationLoginArgs = {
-  password: Scalars['String'];
-  email: Scalars['String'];
+export type MutationConfirmEmailArgs = {
+  userId: Scalars['String'];
+  token: Scalars['String'];
 };
 
 export type MutationForgotPasswordArgs = {
   email: Scalars['String'];
 };
 
-export type MutationResetPasswordArgs = {
-  newPassword: Scalars['String'];
-  userId: Scalars['String'];
-  token: Scalars['String'];
+export type MutationLoginArgs = {
+  input: LoginInput;
 };
 
-export type MutationConfirmEmailArgs = {
+export type MutationRegisterArgs = {
+  input: RegisterInput;
+};
+
+export type MutationResetPasswordArgs = {
+  newPassword: Scalars['String'];
   userId: Scalars['String'];
   token: Scalars['String'];
 };
@@ -61,6 +64,11 @@ export type Query = {
   users: Array<User>;
   me?: Maybe<User>;
   protected: Scalars['String'];
+};
+
+export type RegisterInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type User = {
@@ -89,8 +97,7 @@ export type ForgotPasswordMutation = { __typename?: 'Mutation' } & {
 };
 
 export type LoginMutationVariables = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  input: LoginInput;
 };
 
 export type LoginMutation = { __typename?: 'Mutation' } & {
@@ -114,8 +121,7 @@ export type ProtectedQueryVariables = {};
 export type ProtectedQuery = { __typename?: 'Query' } & Pick<Query, 'protected'>;
 
 export type RegisterMutationVariables = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  input: RegisterInput;
 };
 
 export type RegisterMutation = { __typename?: 'Mutation' } & {
@@ -235,8 +241,8 @@ export type ForgotPasswordMutationOptions = ApolloReactCommon.BaseMutationOption
   ForgotPasswordMutationVariables
 >;
 export const LoginDocument = gql`
-  mutation Login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
+  mutation Login($input: LoginInput!) {
+    login(input: $input) {
       user {
         id
         email
@@ -263,8 +269,7 @@ export type LoginMutationFn = ApolloReactCommon.MutationFunction<
  * @example
  * const [loginMutation, { data, loading, error }] = useLoginMutation({
  *   variables: {
- *      email: // value for 'email'
- *      password: // value for 'password'
+ *      input: // value for 'input'
  *   },
  * });
  */
@@ -415,8 +420,8 @@ export type ProtectedQueryResult = ApolloReactCommon.QueryResult<
   ProtectedQueryVariables
 >;
 export const RegisterDocument = gql`
-  mutation Register($email: String!, $password: String!) {
-    register(email: $email, password: $password) {
+  mutation Register($input: RegisterInput!) {
+    register(input: $input) {
       id
       email
       createdAt
@@ -441,8 +446,7 @@ export type RegisterMutationFn = ApolloReactCommon.MutationFunction<
  * @example
  * const [registerMutation, { data, loading, error }] = useRegisterMutation({
  *   variables: {
- *      email: // value for 'email'
- *      password: // value for 'password'
+ *      input: // value for 'input'
  *   },
  * });
  */

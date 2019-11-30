@@ -4,13 +4,13 @@ import { User } from '../../../entity/User';
 import { Context } from '../../../types';
 import { createAccessToken, createRefreshToken } from '../../../utils/auth';
 import { sendRefreshToken } from '../../../utils/sendRefreshToken';
+import { LoginInput } from './LoginInput';
 import { LoginResponse } from './LoginResponse';
 
 export class LoginResolver {
   @Mutation(() => LoginResponse)
   async login(
-    @Arg('email') email: string,
-    @Arg('password') password: string,
+    @Arg('input') { email, password }: LoginInput,
     @Ctx() { res }: Context
   ): Promise<LoginResponse> {
     const user = await User.findOne({ where: { email } });

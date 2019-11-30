@@ -25,11 +25,12 @@ const ConfirmEmailPage: NextPage = () => {
 
   useEffect(() => {
     (async () => {
+      const input = {
+        userId: userId as string,
+        token: token as string,
+      };
       const response = await confirmEmail({
-        variables: {
-          userId: userId as string,
-          token: token as string,
-        },
+        variables: { input },
       });
 
       if (response && response.data) {

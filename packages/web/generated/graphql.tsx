@@ -15,6 +15,11 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type ConfirmEmailInput = {
+  userId: Scalars['String'];
+  token: Scalars['String'];
+};
+
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -37,8 +42,7 @@ export type Mutation = {
 };
 
 export type MutationConfirmEmailArgs = {
-  userId: Scalars['String'];
-  token: Scalars['String'];
+  input: ConfirmEmailInput;
 };
 
 export type MutationForgotPasswordArgs = {
@@ -79,8 +83,7 @@ export type User = {
 };
 
 export type ConfirmEmailMutationVariables = {
-  userId: Scalars['String'];
-  token: Scalars['String'];
+  input: ConfirmEmailInput;
 };
 
 export type ConfirmEmailMutation = { __typename?: 'Mutation' } & Pick<
@@ -146,8 +149,8 @@ export type UsersQuery = { __typename?: 'Query' } & {
 };
 
 export const ConfirmEmailDocument = gql`
-  mutation ConfirmEmail($userId: String!, $token: String!) {
-    confirmEmail(userId: $userId, token: $token)
+  mutation ConfirmEmail($input: ConfirmEmailInput!) {
+    confirmEmail(input: $input)
   }
 `;
 export type ConfirmEmailMutationFn = ApolloReactCommon.MutationFunction<
@@ -168,8 +171,7 @@ export type ConfirmEmailMutationFn = ApolloReactCommon.MutationFunction<
  * @example
  * const [confirmEmailMutation, { data, loading, error }] = useConfirmEmailMutation({
  *   variables: {
- *      userId: // value for 'userId'
- *      token: // value for 'token'
+ *      input: // value for 'input'
  *   },
  * });
  */

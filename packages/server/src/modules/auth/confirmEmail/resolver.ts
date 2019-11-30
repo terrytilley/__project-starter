@@ -2,13 +2,11 @@ import { verify } from 'jsonwebtoken';
 import { Arg, Mutation } from 'type-graphql';
 
 import { User } from '../../../entity/User';
+import { ConfirmEmailInput } from './ConfirmEmailInput';
 
 export class ConfirmEmailResolver {
   @Mutation(() => Boolean)
-  async confirmEmail(
-    @Arg('token', () => String) token: string,
-    @Arg('userId', () => String) userId: string
-  ) {
+  async confirmEmail(@Arg('input') { userId, token }: ConfirmEmailInput) {
     const user = await User.findOne({ id: userId });
 
     if (!user) return false;

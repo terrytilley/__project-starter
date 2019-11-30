@@ -6,7 +6,6 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 
 import { resolvers } from '../modules/resolvers';
-import limiter from '../services/rateLimit';
 import router from './routes';
 
 export default async (host = 'localhost', port = 4000) => {
@@ -22,10 +21,6 @@ export default async (host = 'localhost', port = 4000) => {
   );
 
   app.use('/', router);
-
-  if (process.env.NODE_ENV === 'production') {
-    app.use(limiter);
-  }
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({ resolvers }),

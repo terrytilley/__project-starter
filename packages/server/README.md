@@ -2,4 +2,5 @@
 
 ## TODO
 
-* [ ] Add Redis rate limiter using
+* [X] Add rate limiter
+* [ ] Add store to rate limiter

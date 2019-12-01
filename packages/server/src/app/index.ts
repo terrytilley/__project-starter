@@ -5,12 +5,14 @@ import helmet from 'helmet';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 
+import { limiter } from '../services/rateLimit';
 import router from './routes';
 
 export default async function bootstrap(host = 'localhost', port = 4000) {
   const app = express.default();
 
   app.use(helmet());
+  app.use(limiter);
 
   app.use(
     cors.default({

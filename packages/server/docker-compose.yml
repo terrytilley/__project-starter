@@ -2,11 +2,11 @@ version: '3.7'
 networks:
   webnet:
 services:
-  # redis:
-  #   image: redis
-  #   restart: always
-  #   networks: 
-  #     - webnet
+  redis:
+    image: redis
+    restart: always
+    networks: 
+      - webnet
   db:
     image: postgres:11.6
     restart: always
@@ -24,7 +24,7 @@ services:
     networks: 
       - webnet
     depends_on:
-      # - redis
+      - redis
       - db
     env_file:
       - '.env'

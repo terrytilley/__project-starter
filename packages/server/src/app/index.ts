@@ -23,7 +23,7 @@ export default async (host = 'localhost', port = 4000) => {
   app.use('/', router);
 
   const apolloServer = new ApolloServer({
-    schema: await buildSchema({ resolvers }),
+    schema: await buildSchema({ resolvers, validate: true }),
     context: ({ req, res }) => ({ req, res }),
   });
 

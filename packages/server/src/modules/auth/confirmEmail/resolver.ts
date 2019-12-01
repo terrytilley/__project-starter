@@ -11,23 +11,21 @@ export default class ConfirmEmailResolver {
     const user = await User.findOne({ id: userId });
 
     if (!user) return false;
-
-    let payload: any = null;
     const secret = `${user.email}-${user.createdAt}`;
 
     try {
-      payload = verify(token, secret);
+      const payload: any = verify(token, secret);
+
+      if (payload.userId === user.id) {
+        user.confirmed = true;
+        user.save();
+
+        return true;
+      }
     } catch (err) {
       console.error(err);
 
       return false;
-    }
-
-    if (payload.userId === user.id) {
-      user.confirmed = true;
-      user.save();
-
-      return true;
     }
 
     return false;

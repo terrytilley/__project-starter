@@ -1,4 +1,4 @@
-import { Arg, Mutation } from 'type-graphql';
+import { Arg, Mutation, Resolver } from 'type-graphql';
 
 import { User } from '../../../entity/User';
 import { passwordResetToken, passwordResetUrl } from '../../../utils/auth';
@@ -6,6 +6,7 @@ import { resetPasswordTemplate } from '../../../utils/emailTemplates';
 import { sendEmail } from '../../../utils/emailTransporter';
 import { ForgotPasswordInput } from './ForgotPasswordInput';
 
+@Resolver()
 export class ForgotPasswordResolver {
   @Mutation(() => String)
   async forgotPassword(@Arg('input') { email }: ForgotPasswordInput) {

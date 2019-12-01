@@ -1,9 +1,10 @@
 import { verify } from 'jsonwebtoken';
-import { Arg, Mutation } from 'type-graphql';
+import { Arg, Mutation, Resolver } from 'type-graphql';
 
 import { User } from '../../../entity/User';
 import { ConfirmEmailInput } from './ConfirmEmailInput';
 
+@Resolver()
 export class ConfirmEmailResolver {
   @Mutation(() => Boolean)
   async confirmEmail(@Arg('input') { userId, token }: ConfirmEmailInput) {

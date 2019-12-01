@@ -1,4 +1,4 @@
-import { Arg, Ctx, Mutation } from 'type-graphql';
+import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
 
 import { User } from '../../../entity/User';
 import { Context } from '../../../types';
@@ -7,6 +7,7 @@ import { sendRefreshToken } from '../../../utils/sendRefreshToken';
 import { LoginInput } from './LoginInput';
 import { LoginResponse } from './LoginResponse';
 
+@Resolver()
 export class LoginResolver {
   @Mutation(() => LoginResponse)
   async login(

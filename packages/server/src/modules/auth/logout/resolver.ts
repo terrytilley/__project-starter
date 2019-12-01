@@ -4,7 +4,7 @@ import { Context } from '../../../types';
 import { sendRefreshToken } from '../../../utils/sendRefreshToken';
 
 @Resolver()
-export class LogoutResolver {
+export default class LogoutResolver {
   @Mutation(() => Boolean)
   async logout(@Ctx() { res }: Context) {
     sendRefreshToken(res, '');

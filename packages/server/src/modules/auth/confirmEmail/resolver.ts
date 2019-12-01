@@ -5,7 +5,7 @@ import { User } from '../../../entity/User';
 import { ConfirmEmailInput } from './ConfirmEmailInput';
 
 @Resolver()
-export class ConfirmEmailResolver {
+export default class ConfirmEmailResolver {
   @Mutation(() => Boolean)
   async confirmEmail(@Arg('input') { userId, token }: ConfirmEmailInput) {
     const user = await User.findOne({ id: userId });

@@ -5,7 +5,7 @@ import { User } from '../../../entity/User';
 import { ResetPasswordInput } from './ResetPasswordInput';
 
 @Resolver()
-export class ResetPasswordResolver {
+export default class ResetPasswordResolver {
   @Mutation(() => Boolean)
   async resetPassword(@Arg('input') { userId, token, newPassword }: ResetPasswordInput) {
     const user = await User.findOne({ id: userId });

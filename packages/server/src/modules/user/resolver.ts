@@ -6,7 +6,7 @@ import { isAuth } from '../../middleware/isAuth';
 import { Context } from '../../types';
 
 @Resolver()
-export class UserResolver {
+export default class UserResolver {
   @Query(() => [User])
   async users() {
     return User.find();

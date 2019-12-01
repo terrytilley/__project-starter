@@ -5,10 +5,9 @@ import helmet from 'helmet';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 
-import { resolvers } from '../modules/resolvers';
 import router from './routes';
 
-export default async (host = 'localhost', port = 4000) => {
+export default async function bootstrap(host = 'localhost', port = 4000) {
   const app = express.default();
 
   app.use(helmet());
@@ -22,14 +21,19 @@ export default async (host = 'localhost', port = 4000) => {
 
   app.use('/', router);
 
-  const apolloServer = new ApolloServer({
-    schema: await buildSchema({ resolvers, validate: true }),
-    context: ({ req, res }) => ({ req, res }),
-  });
+  try {
+    const resolvers = [`${__dirname}/../modules/**/**/resolver.ts`];
+    const apolloServer = new ApolloServer({
+      schema: await buildSchema({ resolvers, validate: true }),
+      context: ({ req, res }) => ({ req, res }),
+    });
 
-  apolloServer.applyMiddleware({ app, cors: false });
+    apolloServer.applyMiddleware({ app, cors: false });
 
-  app.listen(port, () => {
-    console.log(`🚀 Server ready at http://${host}:${port}${apolloServer.graphqlPath}`);
-  });
-};
+    app.listen(port, () => {
+      console.log(`🚀 Server ready at http://${host}:${port}${apolloServer.graphqlPath}`);
+    });
+  } catch (err) {
+    console.error('🚨', err);
+  }
+}

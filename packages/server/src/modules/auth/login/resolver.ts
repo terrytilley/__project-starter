@@ -8,7 +8,7 @@ import { LoginInput } from './LoginInput';
 import { LoginResponse } from './LoginResponse';
 
 @Resolver()
-export class LoginResolver {
+export default class LoginResolver {
   @Mutation(() => LoginResponse)
   async login(
     @Arg('input') { email, password }: LoginInput,

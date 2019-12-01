@@ -7,7 +7,7 @@ import { sendEmail } from '../../../utils/emailTransporter';
 import { RegisterInput } from './RegisterInput';
 
 @Resolver(() => User)
-export class RegisterResolver {
+export default class RegisterResolver {
   @Mutation(() => User)
   async register(@Arg('input') { email, password }: RegisterInput): Promise<User> {
     try {

@@ -7,7 +7,7 @@ import { sendEmail } from '../../../utils/emailTransporter';
 import { ForgotPasswordInput } from './ForgotPasswordInput';
 
 @Resolver()
-export class ForgotPasswordResolver {
+export default class ForgotPasswordResolver {
   @Mutation(() => String)
   async forgotPassword(@Arg('input') { email }: ForgotPasswordInput) {
     const user = await User.findOne({ email });

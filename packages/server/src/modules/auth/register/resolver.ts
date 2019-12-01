@@ -3,7 +3,7 @@ import { Arg, Mutation, Resolver } from 'type-graphql';
 import { User } from '../../../entity/User';
 import { confirmEmailToken, confirmEmailUrl } from '../../../utils/auth';
 import { confirmEmailTemplate } from '../../../utils/emailTemplates';
-// import { sendEmail } from '../../../utils/emailTransporter';
+import { sendEmail } from '../../../utils/emailTransporter';
 import { RegisterInput } from './RegisterInput';
 
 @Resolver(() => User)
@@ -16,8 +16,7 @@ export class RegisterResolver {
       const url = confirmEmailUrl(user, token);
       const emailTemplate = confirmEmailTemplate(user, url);
 
-      // await sendEmail(emailTemplate);
-      console.log(emailTemplate);
+      await sendEmail(emailTemplate);
 
       return user;
     } catch (err) {

@@ -13,7 +13,7 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.2",
     "@apollo/react-ssr": "^3.1.2",
-    "@material-ui/core": "^4.7.0",
+    "@material-ui/core": "^4.7.2",
     "@material-ui/icons": "^4.5.1",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
@@ -44,13 +44,13 @@
     "@types/cookie": "^0.3.3",
     "@types/jwt-decode": "^2.2.1",
     "@types/node": "^12.12.14",
-    "@types/react": "^16.9.13",
+    "@types/react": "^16.9.15",
     "@types/react-dom": "^16.9.4",
     "prettier": "^1.19.1",
     "tslint": "^5.20.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^4.1.0",
-    "typescript": "3.7.2"
+    "typescript": "3.7.3"
   },
   "license": "MIT"
 }

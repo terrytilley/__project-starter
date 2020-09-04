@@ -29,7 +29,7 @@
     "pg": "^7.14.0",
     "rate-limit-redis": "^1.7.0",
     "reflect-metadata": "^0.1.13",
-    "type-graphql": "^0.17.5",
+    "type-graphql": "^0.17.6",
     "typeorm": "0.2.21"
   },
   "devDependencies": {

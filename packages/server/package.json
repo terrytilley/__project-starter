@@ -30,7 +30,7 @@
     "rate-limit-redis": "^1.7.0",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^0.17.5",
-    "typeorm": "0.2.21"
+    "typeorm": "0.2.25"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
